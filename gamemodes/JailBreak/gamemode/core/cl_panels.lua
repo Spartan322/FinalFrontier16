@@ -20,11 +20,11 @@ function JB.premadepnl.error(m, KeepClicker)
 	f:SetSize(500, 200)
 	f:SetPos(ScrW()/2-250, ScrH()/2-175)
 	f.Title= t[math.random(1,#t)]
-	
+
 	local p=vgui.Create("pbPanel",f)
 	p:SetSize(385,140)
 	p:SetPos(5,55)
-	
+
 	local but=vgui.Create("pbSelectButton",f)
 	but:SetPos(395,200-31)
 	but:SetSize(100,25)
@@ -35,19 +35,19 @@ function JB.premadepnl.error(m, KeepClicker)
 			gui.EnableScreenClicker(false)
 		end
 	end
-	
+
 	local m=JB.util.FormatLine("Jailbreak 3 version 1.0: \n"..m,"Default",365)
 	local l=Label(m,p)
 	l:SizeToContents()
 	l:SetPos(10,10)
 	l:SetColor(Color(20,20,20,255))
-	
+
 end
 
 -- yes-no votes
 function JB.premadepnl.voteYesNo(m, onYes, onNo)
 	if JB.fVote and JB.fVote:IsValid() then JB.fVote:Remove() end
-	
+
 	JB.fVote=vgui.Create("pbFrame")
 	JB.fVote:SetSize(280, 150)
 	JB.fVote:SetPos(10, 350)
@@ -62,20 +62,20 @@ function JB.premadepnl.voteYesNo(m, onYes, onNo)
 			return
 		end
 	end
-	
+
 	local m=JB.util.FormatLine(m,"DefaultBold",260)
 	local l=Label(m,JB.fVote)
 	l:SetPos(10,55)
 	l:SetFont("DefaultBold")
 	l:SetColor(Color(20,20,20,255))
 	l:SizeToContents()
-	
+
 	local l=Label("press 'C' to vote.",JB.fVote)
 	l:SetFont("Default")
 	l:SetColor(Color(255,255,255,255))
 	l:SizeToContents()
 	l:SetPos(90,29)
-	
+
 	local but=vgui.Create("jbSelectButton",JB.fVote)
 	but:SetPos(10,150-35)
 	but:SetSize(280/2-15,25)
@@ -84,7 +84,7 @@ function JB.premadepnl.voteYesNo(m, onYes, onNo)
 		JB.fVote:Remove()
 		onYes()
 	end
-	
+
 	local but=vgui.Create("jbSelectButton",JB.fVote)
 	but:SetPos(280/2-15+20,150-35)
 	but:SetSize(280/2-15,25)

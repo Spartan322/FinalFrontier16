@@ -9,14 +9,14 @@ function _R.Player:IsPrisoner()
 end
 
 function _R.Player:HasChoosen() -- Are we out of the selection menu yet?
-	return not(not(self.character)) -- turn it into a boolean
+	return tobool(self.character) -- turn it into a boolean
 end
 
 function _R.Player:SendNotification(m,i)
-	umsg.Start("JNC",self)
-	umsg.String(m)
+	net.Start("JNC")
+	net.WriteString(m)
 	if i then
-		umsg.String(i)
+		net.WriteString(i)
 	end
-	umsg.End()
+	net.Send(self)
 end

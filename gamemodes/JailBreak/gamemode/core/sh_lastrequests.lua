@@ -5,27 +5,27 @@ local meta = {}
 activeLR = false
 function JB:LastRequest()
 	local obj = {}
-       
-    setmetatable( obj, meta )
-   	meta.__index =  meta
 
-   	obj.prisoner = NULL
-   	obj.guard = NULL
+	setmetatable( obj, meta )
+	meta.__index =  meta
 
-   	obj.id = math.random(0,999)
+	obj.prisoner = NULL
+	obj.guard = NULL
 
-   	obj.Name = "Undefined"
-   	obj.OnStart = false
-   	obj.OnPrisonerDamaged = false
-   	obj.OnGuardDamaged = false
-   	obj.OnPrisonerDied = false
-   	obj.OnGuardDied = false
-   	obj.OnComplete = false
+	obj.id = math.random(0,999)
 
-   	obj.Time = 240
-   	obj.Start = 0
+	obj.Name = "Undefined"
+	obj.OnStart = false
+	obj.OnPrisonerDamaged = false
+	obj.OnGuardDamaged = false
+	obj.OnPrisonerDied = false
+	obj.OnGuardDied = false
+	obj.OnComplete = false
 
-   	return obj
+	obj.Time = 240
+	obj.Start = 0
+
+	return obj
 end
 
 function meta:AddPlayers(p,g)
@@ -40,16 +40,16 @@ function meta.__call(self)
 
 	JB:DebugPrint("LR Started")
 
-	self.Start = CurTime() 
+	self.Start = CurTime()
 
-	umsg.Start("JNC",self.guard)
-	umsg.String("You have been chosen to play a "..self.Name.." against "..self.prisoner:Nick())
-	umsg.String("boom")
-	umsg.End()
-	umsg.Start("JNC",self.prisoner)
-	umsg.String("You have chosen to play a "..self.Name.." against "..self.prisoner:Nick())
-	umsg.String("boom")
-	umsg.End()
+	net.Start("JNC")
+	net.WriteString("You have been chosen to play a "..self.Name.." against "..self.prisoner:Nick())
+	net.WriteString("boom")
+	net.Send(self.guard)
+	net.Start("JNC")
+	net.WriteString("You have chosen to play a "..self.Name.." against "..self.prisoner:Nick())
+	net.WriteString("boom")
+	net.Send(self.prisoner)
 
 	timer.Simple(self.Time,function(self)
 		if not self then return end

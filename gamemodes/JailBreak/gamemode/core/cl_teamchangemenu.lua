@@ -17,8 +17,8 @@ local function SetChary(n,lab1,lab2,mdlp,w)
 	mdlp.LayoutEntity = function() end
 end
 local selChr = 1
-usermessage.Hook("JBOTCM",function()
-	if LocalPlayer():Team() == TEAM_SPECTATOR then return end
+net.Receive("JBOTCM",function(len, p)
+	if p:Team() == TEAM_SPECTATOR then return end
 	if teamchangepanel and teamchangepanel:IsValid() then gui.EnableScreenClicker(false) timer.Remove("JBInGameCHarCheckIfWeCanActuallyJoinThisTeam") teamchangepanel:Remove() return end
 
 	gui.EnableScreenClicker(true)
@@ -40,7 +40,7 @@ usermessage.Hook("JBOTCM",function()
 	mPri:SetPos(-80,30)
 	mPri:SetCamPos( Vector( 80, 0, 40 ) )
 	mPri:SetLookAt( Vector( 0, 0, 40 ) )
-	mPri.LayoutEntity = function(self) 
+	mPri.LayoutEntity = function(self)
 	end
 	local sPri = vgui.Create( "pbSelectButton",teamchangepanel)
 	sPri.Name = "Prisoners"
@@ -52,13 +52,13 @@ usermessage.Hook("JBOTCM",function()
 	mGua:SetPos(teamchangepanel:GetWide()+70-350,30)
 	mGua:SetCamPos( Vector( 80, 0, 40 ) )
 	mGua:SetLookAt( Vector( 0, 0, 40 ) )
-	mGua.LayoutEntity = function(self) 
+	mGua.LayoutEntity = function(self)
 	end
 	local sGua = vgui.Create( "pbSelectButton",teamchangepanel)
 	sGua.Name = "Guards"
 	sGua:SetSize((teamchangepanel:GetWide()/2)-5-10,25)
 	sGua:SetPos(teamchangepanel:GetWide()/2+5,teamchangepanel:GetTall()-25-10)
-	sGua.DoClick = function() 
+	sGua.DoClick = function()
 		RunConsoleCommand("jb_menu_selectcharacter_ingame","guard",1)
 		if teamchangepanel and teamchangepanel:IsValid() then gui.EnableScreenClicker(false) timer.Remove("JBInGameCHarCheckIfWeCanActuallyJoinThisTeam") teamchangepanel:Remove() return end
 	end
@@ -69,7 +69,7 @@ usermessage.Hook("JBOTCM",function()
 	full:SetSize(74,74)
 	full:SetImage("excljailbreak/full")
 	full:SetVisible(false)
-	timer.Create("JBInGameCHarCheckIfWeCanActuallyJoinThisTeam",.2,0,function() 
+	timer.Create("JBInGameCHarCheckIfWeCanActuallyJoinThisTeam",.2,0,function()
 		if not teamchangepanel or not teamchangepanel:IsValid() or not full or not full:IsValid() then return end
 		if JB:CanBeGuard() then
 			full:SetVisible(false)
@@ -82,7 +82,7 @@ usermessage.Hook("JBOTCM",function()
 
 	sPri.DoClick = function(self)
 		if full and full:IsValid() then full:Remove() end
-		
+
 		self:Remove()
 		self.sGua.Name = "Select"
 		self.mGua:Remove()

@@ -1,9 +1,9 @@
 -- sv_player_hooks
 --Functions
-function JB:CanPlayerSuicide(p)	
-	if(p:Team()< 3)then 
+function JB:CanPlayerSuicide(p)
+	if(p:Team()< 3)then
 		return true
-	end 
+	end
 	return false
 end
 
@@ -19,7 +19,7 @@ function JB:PlayerSelectSpawn(p)
 	end
 end
 
---[[ 
+--[[
 -- Commented cause it doesn't work in MP :(
 hook.Add("KeyPress" ,"CrouchMovementKeyPRess" ,function(p,k)
 	if k== IN_DUCK then
@@ -62,7 +62,7 @@ function JB:PlayerSpawn(p)
 		p:ConCommand("jb_spectate_switch_plus")
 		p:SetMoveType( MOVETYPE_OBSERVER )
 		p:SetNoDraw(true)
-	elseif not p.character then 
+	elseif not p.character then
 		p:SetFOV(90)
 		p:SetTeam(TEAM_SPECTATOR)
 		p:SetMoveType(MOVETYPE_OBSERVER)
@@ -75,7 +75,7 @@ function JB:PlayerSpawn(p)
 		p:Freeze(true)
 		p:SetNoDraw(true)
 		p.character = nil
-	end	
+	end
 end
 
 local DeathSounds = {
@@ -150,29 +150,36 @@ function JB:GetFallDamage( ply, speed )
 end
 
 function JB:ShowHelp(p)
-	umsg.Start("JBH",p) umsg.End()
-	
+	net.Start("JBH")
+	net.Send(p)
+
 	return false
 end
 
 function JB:ShowTeam(p)
-	umsg.Start("JBOTCM",p) umsg.End()
+	net.Start("JBOTCM")
+	net.Send(p)
 	return false
 end
 
 function JB:ShowSpare1(p)
-	p:SendNotification("This key is not bound in Jailbreak3","error")
+	p:SendNotification("This key is not bound in "..JB.Name,"error")
 	return false
 end
 
 function JB:ShowSpare2(p)
 	if p:Team() == TEAM_GUARD then
-		umsg.Start("JOGP",p) umsg.End()
+		net.Start("JOGP")
+		net.Send(p)
 	elseif p:Team() == TEAM_PRISONER then
 		if #team.GetPlayers(TEAM_PRISONER) < 2 then
-			umsg.Start("JOLR",p) umsg.End()
+			net.Start("JOLR")
+			net.Send(p)
 		else
-			umsg.Start("JNC",p) umsg.String("You can not do a last request until you are the last prisoner alive.") umsg.String("boom") umsg.End()
+			net.Start("JNC")
+			net.WriteString("You can not do a last request until you are the last prisoner alive.")
+			net.WriteString("boom")
+			net.Broadcast()
 		end
 	end
 	return false
@@ -188,17 +195,17 @@ function JB:CanPlayerSuicide(p)
 	end
 
 	return true
-end 
+end
 
 function JB:PlayerUse( p )
 	return (p:Team() == TEAM_GUARD or p:Team() == TEAM_PRISONER)
 end
 
 function JB:PlayerCanPickupWeapon( p, wep )
-	if (p:Team() ~= TEAM_GUARD and p:Team() ~= TEAM_PRISONER) 
-	or (p:HasPrimary() and wep:IsPrimary()) 
-	or (p:HasSecondary() and wep:IsSecondary()) 
-	or table.HasValue(removeWeps,wep:GetClass()) then 
+	if (p:Team() ~= TEAM_GUARD and p:Team() ~= TEAM_PRISONER)
+	or (p:HasPrimary() and wep:IsPrimary())
+	or (p:HasSecondary() and wep:IsSecondary())
+	or table.HasValue(removeWeps,wep:GetClass()) then
 		return false
 	end
 	return true
@@ -214,7 +221,7 @@ end
 
 function JB:PlayerDisconnected( p )
 	if not p:IsPrisoner() or not p:IsGuard() then return end-- don't need to check round status when their spectator.
-	
+
 	JB:CheckRoundEnd()
 end
 

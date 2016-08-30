@@ -4,12 +4,12 @@
 -- below creates lua driven airacceleration.
 function JB:Move( p, md ) -- Place holder until we come up with a better forumla of our own.
 	if p:IsOnGround() or !p:Alive() or p:WaterLevel() > 0 then return end
-	
+
 	local aim = md:GetMoveAngles()
 	local forward, right = aim:Forward(), aim:Right()
 	local fmove = md:GetForwardSpeed()
 	local smove = md:GetSideSpeed()
-	
+
 	forward.z, right.z = 0,0
 	forward:Normalize()
 	right:Normalize()

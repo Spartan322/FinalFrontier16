@@ -8,14 +8,14 @@ end
 
 
 if ( CLIENT ) then
-	SWEP.PrintName			= "Shot 4 Shot"	
+	SWEP.PrintName			= "Shot 4 Shot"
 	SWEP.Author				= "NewBee"
 	SWEP.DrawAmmo 			= false
 	SWEP.DrawCrosshair 		= false
 	SWEP.ViewModelFOV			= 65
 	SWEP.ViewModelFlip		= false
 	SWEP.CSMuzzleFlashes		= false
-	
+
 	SWEP.Slot				= 1
 	SWEP.SlotPos			= 0
 end
@@ -31,7 +31,7 @@ SWEP.ViewModelFlip = true
 SWEP.AdminSpawnable			= false
 
 SWEP.ViewModel 				= "models/weapons/v_pist_deagle.mdl"
-SWEP.WorldModel 			= "models/weapons/w_pist_deagle.mdl" 
+SWEP.WorldModel 			= "models/weapons/w_pist_deagle.mdl"
 
 SWEP.Weight					= 5
 SWEP.AutoSwitchTo			= false
@@ -90,7 +90,7 @@ end
 local bullet = {}
 bullet.Num=1
 bullet.Spread=Vector(0.01,0.01,0)
-bullet.Tracer=1	
+bullet.Tracer=1
 bullet.Force=100
 bullet.Damage=75
 function SWEP:PrimaryAttack()
@@ -99,9 +99,9 @@ function SWEP:PrimaryAttack()
 	bullet.Src 		= self.Owner:GetShootPos()
 	bullet.Dir 		= ( self.Owner:EyeAngles() + self.Owner:GetPunchAngle() ):Forward()
 	GUARDFIRE(not self.GuardTurn)
-	 
+
 	self:FireBullets(bullet)
-	
+
 	self.Owner:EmitSound("Weapon_Deagle.Single", 100, 100)
 
 	self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
@@ -123,11 +123,11 @@ function SWEP:DrawHUD()
 			self.t = CurTime()
 		end
 		s = "You have "..math.Round(30 - (CurTime() - self.t)).." seconds left to shoot."
-	end 
+	end
 	draw.SimpleTextOutlined(s,"DefaultBold",ScrW() / 2, (ScrH() / 2) + 20,Color(255,255,255,255),1,1,1,Color(0,0,0,255))
 
 	self.f = (self:GetDTBool(0,false) ~= self.memf)
-	self.memf = self:GetDTBool(0,false) 
+	self.memf = self:GetDTBool(0,false)
 end
 
 function SWEP:Reload()
@@ -147,11 +147,11 @@ function SWEP:FireAnimationEvent(pos, ang, ev)
 			if not self.Owner:ShouldDrawLocalPlayer() then
 				local vm = self.Owner:GetViewModel()
 				local muz = vm:GetAttachment("1")
-				
+
 				if not self.Weapon.Em then
 					self.Weapon.Em = ParticleEmitter(muz.Pos)
 				end
-				
+
 				local par = self.Weapon.Em:Add("sprites/frostbreath", muz.Pos)
 				par:SetStartSize(math.random(1, 5))
 				par:SetStartAlpha(140)
@@ -164,13 +164,13 @@ function SWEP:FireAnimationEvent(pos, ang, ev)
 				par:SetGravity(Vector(0, 0, 5))
 				local mup = (muz.Ang:Up()*-20)
 				par:SetVelocity(Vector(0, 0,7)+Vector(mup.x,mup.y,0))
-				
+
 				local par = self.Weapon.Em:Add("sprites/heatwave", muz.Pos)
 				par:SetStartSize(8)
 				par:SetEndSize(0)
 				par:SetDieTime(0.3)
 				par:SetGravity(Vector(0, 0, 2))
-				par:SetVelocity(Vector(0, 0, 20))				
+				par:SetVelocity(Vector(0, 0, 20))
 			end
 		end
 end

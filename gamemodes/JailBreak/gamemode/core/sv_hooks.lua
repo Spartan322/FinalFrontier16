@@ -1,8 +1,8 @@
 -- sv_hooks.lua
 -- for all hooks that have nothing to do with the player
 
-function JB:GetGameDescription() 
- 	return "Excl's JailBreak" 
+function JB:GetGameDescription()
+	return "Excl's JailBreak"
 end
 
 function JB:InitPostEntity()
@@ -10,12 +10,12 @@ function JB:InitPostEntity()
 	e:SetPos(MenuMain.pos + Vector(-180.4935, 39.8303, -78.2938))
 	e:SetAngles(Angle(0,270,0))
 	e:Spawn()
-	
+
 	local e = ents.Create("jb_previewmodel")
 	e:SetPos(MenuMain.pos + Vector(22.5065, 39.8303, -53.897))
 	e:SetAngles(Angle(0,235,0))
 	e:Spawn()
-	
+
 	local e = ents.Create("prop_physics")
 	e:SetModel("models/hunter/plates/plate8x8.mdl")
 	e:SetPos(MenuMain.pos+Vector(-80.4935, 46.8303, -93.897)) --Vector(-1419.506470, -399.830292, 243.897842) + Vector() = Vector( -1500, -353, 150)

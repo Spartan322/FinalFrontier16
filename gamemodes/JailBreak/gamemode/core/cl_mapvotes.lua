@@ -2,7 +2,7 @@
 local f
 function JB:CreateMapVoteMenu(t)
 	if f and f:IsValid() then f:Remove() if timer.IsTimer("jbTimeMapVoteMenu") then timer.Remove("jbTimeMapVoteMenu") end end
-	
+
 	f=vgui.Create("pbFrame")
 	f:SetSize(300, 95+30*(#t))
 	f:SetPos(10, 350)
@@ -17,7 +17,7 @@ function JB:CreateMapVoteMenu(t)
 			return
 		end
 	end
-	
+
 	local l=Label("x",f)
 	l.t = CurTime()+30
 	l:SetPos(10,55)
@@ -27,13 +27,13 @@ function JB:CreateMapVoteMenu(t)
 		self:SetText("Select the map you want to play.\nYou have "..math.ceil(self.t - CurTime()).." seconds left to vote.")
 		self:SizeToContents()
 	end
-	
+
 	local l=Label("Hold 'C' to show your cursor.",f)
 	l:SetFont("Default")
 	l:SetColor(Color(255,255,255,255))
 	l:SizeToContents()
 	l:SetPos(90,29)
-	
+
 	for k,v in pairs(t)do
 		local but=vgui.Create("pbSelectButton",f)
 		but:SetPos(10,90+((k-1)*30))
@@ -48,4 +48,4 @@ function JB:CreateMapVoteMenu(t)
 		if f and f:IsValid() then f:Remove() end
 	end)
 end
-usermessage.Hook("JSMV",function(um) JB:CreateMapVoteMenu{um:ReadString(),um:ReadString(),um:ReadString(),um:ReadString(),um:ReadString()} end)
+net.Receive("JSMV",function(len, p) JB:CreateMapVoteMenu{net.ReadString(),net.ReadString(),net.ReadString(),net.ReadString(),net.ReadString()} end)

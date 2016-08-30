@@ -10,20 +10,20 @@ function EFFECT:Init( data )
 			if (smoke) then
 
 				smoke:SetVelocity(VectorRand() * 600)
-				
+
 				smoke:SetLifeTime(0)
 				smoke:SetDieTime(math.Rand(5, 10))
-				
+
 				smoke:SetColor(120, 120, 120)
 				smoke:SetStartAlpha(math.Rand(240, 255))
 				smoke:SetEndAlpha(0)
-				
+
 				smoke:SetStartSize(math.Rand(30, 45))
 				smoke:SetEndSize(math.Rand(175, 225))
-				
+
 				smoke:SetRoll(math.Rand(-180, 180))
 				smoke:SetRollDelta(math.Rand(-0.1, 0.1))
-				
+
 				smoke:SetAirResistance(math.Rand(400, 600))
 				smoke:SetGravity( Vector( 0, 0, math.Rand(0, 10) ) )
 
@@ -32,7 +32,7 @@ function EFFECT:Init( data )
 --				smoke:SetLighting(1)
 			end
 		end
-		
+
 	emitter:Finish()
 end
 

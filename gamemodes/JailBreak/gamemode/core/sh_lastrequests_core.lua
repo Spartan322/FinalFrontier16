@@ -10,8 +10,8 @@ function JB:GetLRs()
 	return lrs
 end
 local function addLR(name,discr,mat,numpoints,lrhooks)
-	if not lrhooks or type(lrhooks) ~= "table" then 
-		lrhooks = {} 
+	if not lrhooks or type(lrhooks) ~= "table" then
+		lrhooks = {}
 	end
 	lrs[#lrs+1] = {name=name,discr=discr,mat=mat,numpoints=numpoints,lrhooks=lrhooks}
 end
@@ -67,9 +67,11 @@ addLR("Race","The requesting prisoner and the guard will race from a predefined 
 		t.min = t:SetPos(JB:GetMapConfigLR()["Race"][2] + Vector(50,50,50))
 		t.max = t:SetPos(JB:GetMapConfigLR()["Race"][2] - Vector(50,50,50))
 		t:Spawn()
-	
-		umsg.Start("JLRRace", {p,g}) umsg.Vector(JB:GetMapConfigLR()["Race"][2]) umsg.End()
-		timer.Simple(5,function(p,g) 
+
+		net.Start("JLRRace")
+		net.WriteVector(JB:GetMapConfigLR()["Race"][2])
+		net.Send({p,g})
+		timer.Simple(5,function(p,g)
 			p:Freeze(false)
 			g:Freeze(false)
 		end,p,g)
@@ -163,9 +165,9 @@ addLR("Russian roulette","One gun, one bullet, spin the chamber and take a shot.
 		    phys:EnableMotion(false)
 		end
 
-		umsg.Start("JLRRRRRR",p)
-		umsg.Vector(n+(v:GetAngles():Right()*40)+Vector(-8,-5,33))
-		umsg.End()
+		net.Start("JLRRRRRR")
+		net.WriteVector(n+(v:GetAngles():Right()*40)+Vector(-8,-5,33))
+		net.Send(p)
 
 	end,
 	OnGuardDied = function(self)
@@ -193,7 +195,7 @@ hook.Add("KeyRelease","RUssianKeyPressJB",function(p,k)
 				end
 			end
 			RRGun:Remove()
-		end)	
+		end)
 	end
 end)
 end
@@ -215,7 +217,7 @@ addLR("Shot4Shot","Prisoner and guard shoot each other, they take turns, every t
 	"HUD/derma/shot4shot",2,{
 	OnStart = function(p,g)
 		p:SetColor(Color(255,0,0,255))
-		g:SetColor(Color(255,0,0,255))				
+		g:SetColor(Color(255,0,0,255))
 
 		p:StripWeapons()
 		g:StripWeapons()
@@ -262,7 +264,7 @@ if SERVER then
 		lr:AddPlayers(p,g)
 		lr:LoadTemplate(lrs[n])
 		lr()
-		
+
 	end
 
 	concommand.Add("jb_lr_start",function(p,c,a)
@@ -278,20 +280,20 @@ elseif CLIENT then
 		draw.SimpleTextOutlined("Press [F3] to set the race starting point.\nThen press [F3] again to set the end point.","HUDNumber5",ScrW()/2,ScrH()/2,Color(255,255,255,255),1,1,1,Color(0,0,0,255))
 	end
 	hook.Add("HUDPaint","DrawJailBreakLRRaceThingy",function()
-		
+
 	end)
 
-	usermessage.Hook("JLRRace",function(u)
+	net.Receive("JLRRace",function(len, p)
 		JB:HUDStartTimer(5,"Last Request: Race")
-		JB:SetObjective(u:ReadVector(),"Race","Finish, get here first to win the Last Request")
+		JB:SetObjective(net.ReadVector(),"Race","Finish, get here first to win the Last Request")
 	end)
-	
-	usermessage.Hook("JLRRRRRR",function(u)
-		JB:SetObjective(u:ReadVector(),"Russian Roulette","Press E to take a spin")
+
+	net.Receive("JLRRRRRR",function(len, p)
+		JB:SetObjective(net.ReadVector(),"Russian Roulette","Press E to take a spin")
 	end)
 
 	local lrFrame
-	usermessage.Hook("JOLR",function()
+	net.Hook("JOLR",function(len, p)
 		if lrFrame and lrFrame:IsValid() then
 			lrFrame:Remove()
 			gui.EnableScreenClicker(false)
@@ -379,7 +381,7 @@ elseif CLIENT then
 			table.insert(lrPnls,pnl)
 			table.insert(lrPnls,mdlpnl)
 		end
-		
+
 		gui.EnableScreenClicker(true)
 	end)
 end

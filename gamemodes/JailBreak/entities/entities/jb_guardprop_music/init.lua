@@ -69,32 +69,32 @@ SOUNDS[16] = {
 	pitch = 130,
 }
 
-function ENT:Initialize()    
-    self:SetModel( "models/hunter/plates/plate1x1.mdl" )
+function ENT:Initialize()
+	self:SetModel( "models/hunter/plates/plate1x1.mdl" )
 
-    self:PhysicsInit(SOLID_VPHYSICS)
-    self:SetMoveType(MOVETYPE_VPHYSICS)
-    self:SetSolid(SOLID_VPHYSICS)
+	self:PhysicsInit(SOLID_VPHYSICS)
+	self:SetMoveType(MOVETYPE_VPHYSICS)
+	self:SetSolid(SOLID_VPHYSICS)
 
-    self:SetUseType(SIMPLE_USE)
+	self:SetUseType(SIMPLE_USE)
 
-    local phys = self.Entity:GetPhysicsObject()
-    if (phys:IsValid()) then
-        phys:Wake()
-    end
+	local phys = self.Entity:GetPhysicsObject()
+	if (phys:IsValid()) then
+		phys:Wake()
+	end
 end
 
 function ENT:OnTakeDamage( dmginfo )
-    self.Entity:TakePhysicsDamage( dmginfo )  
+	self.Entity:TakePhysicsDamage( dmginfo )
 end
 
 local size =(200-8*4)/4
 local function WorldToScreen(vWorldPos,vPos,vScale,aRot)
-    local vWorldPos=vWorldPos-vPos
-    vWorldPos:Rotate(Angle(0,-aRot.y,0))
-    vWorldPos:Rotate(Angle(-aRot.p,0,0))
-    vWorldPos:Rotate(Angle(0,0,-aRot.r))
-    return vWorldPos.x/vScale,(-vWorldPos.y)/vScale
+	local vWorldPos=vWorldPos-vPos
+	vWorldPos:Rotate(Angle(0,-aRot.y,0))
+	vWorldPos:Rotate(Angle(-aRot.p,0,0))
+	vWorldPos:Rotate(Angle(0,0,-aRot.r))
+	return vWorldPos.x/vScale,(-vWorldPos.y)/vScale
 end
 function ENT:Use(e)
 	if(e:IsPlayer())then

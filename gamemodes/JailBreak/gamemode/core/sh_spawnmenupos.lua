@@ -32,7 +32,7 @@ local function CopyTable(t) -- normal table.copy doesn't work (
 			tbl[k] = v
 		end
 	end
-	return tbl 
+	return tbl
 end
 
 MenuPos = CopyTable(MenuMain)

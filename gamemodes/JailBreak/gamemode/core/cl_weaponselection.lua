@@ -139,17 +139,17 @@ hook.Add("PlayerBindPress","JBBindWEapons", function(p, bind, pressed)
 		ArrangeSlots()
 
 		return true
-	elseif string.find(bind, "slot0") then 
+	elseif string.find(bind, "slot0") then
 		selectedTab = 0
-		return true 
-	elseif string.find(bind, "slot1") then 
+		return true
+	elseif string.find(bind, "slot1") then
 		if LocalPlayer():Team() > 2 then return true  end
 		if selectedTab ~= 1 then
 			surface.PlaySound("common/wpn_moveselect.wav")
 		end
 		selectedTab = 1
 		ArrangeSlots()
-		return true 
+		return true
 	elseif string.find(bind, "slot2") then
 		if LocalPlayer():Team() > 2 then return true  end
 		if selectedTab ~= 2 then
@@ -157,16 +157,16 @@ hook.Add("PlayerBindPress","JBBindWEapons", function(p, bind, pressed)
 		end
 		selectedTab = 2
 		ArrangeSlots()
-		return true 
-	elseif string.find(bind, "slot3") then 
+		return true
+	elseif string.find(bind, "slot3") then
 		if LocalPlayer():Team() > 2 then return true  end
 		if selectedTab ~= 3 then
 			surface.PlaySound("common/wpn_moveselect.wav")
 		end
 		selectedTab = 3
 		ArrangeSlots()
-		return true 
-	elseif string.find(bind, "slot4") then 
+		return true
+	elseif string.find(bind, "slot4") then
 		if LocalPlayer():Team() > 2 then return true  end
 		surface.PlaySound("common/wpn_moveselect.wav")
 		if selectedTab == 4 then
@@ -175,22 +175,22 @@ hook.Add("PlayerBindPress","JBBindWEapons", function(p, bind, pressed)
 		selectedTab = 4
 		ArrangeSlots()
 		return true
-	elseif string.find(bind, "slot5") then 
+	elseif string.find(bind, "slot5") then
 		selectedTab = 0
 		return true
-	elseif string.find(bind, "slot6") then 
+	elseif string.find(bind, "slot6") then
 		selectedTab = 0
 		return true
-	elseif string.find(bind, "slot7") then 
+	elseif string.find(bind, "slot7") then
 		selectedTab = 0
 		return true
-	elseif string.find(bind, "slot8") then 
+	elseif string.find(bind, "slot8") then
 		selectedTab = 0
 		return true
-	elseif string.find(bind, "slot9") then 
+	elseif string.find(bind, "slot9") then
 		selectedTab = 0
 		return true
-	elseif string.find(bind, "+attack") then 
+	elseif string.find(bind, "+attack") then
 		if LocalPlayer():Team() > 2 then return true end
 		if selectedTab > 0 and slots[selectedTab] then
 			if not slots[selectedTab][slotPos] then return true end

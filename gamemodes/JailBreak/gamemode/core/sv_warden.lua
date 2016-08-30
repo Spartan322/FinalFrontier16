@@ -24,10 +24,13 @@ function JB:SetWarden(p)
 		v:SetModel("models/player/police.mdl")
 	end
 	p:SetModel("models/player/barney.mdl")
-	umsg.Start("JSWP") umsg.Entity(p) umsg.End()
+	net.Start("JSWP")
+	net.WriteEntity(p)
+	net.Broadcast()
 end
 
 function JB:ResetWarden()
 	JB.wardenPlayer = nil
-	umsg.Start("JRSW") umsg.End()
+	net.Start("JRSW")
+	net.Broadcast()
 end

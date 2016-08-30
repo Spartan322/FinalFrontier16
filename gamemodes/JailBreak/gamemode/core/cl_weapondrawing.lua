@@ -55,7 +55,7 @@ hook.Add("PostPlayerDraw","JBDrawWeaponsOnPlayer",function(p)
 					mdl:DrawModel()
 				end
 			end
-		end	
+		end
 	end
 end)
 

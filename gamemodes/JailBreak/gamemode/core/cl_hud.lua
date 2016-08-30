@@ -1,263 +1,263 @@
 local tblFonts = { }
 tblFonts["DebugFixed"] = {
-    font = "Courier New",
-    size = 10,
-    weight = 500,
-    antialias = true,
+	font = "Courier New",
+	size = 10,
+	weight = 500,
+	antialias = true,
 }
- 
+
 tblFonts["DebugFixedSmall"] = {
-    font = "Courier New",
-    size = 7,
-    weight = 500,
-    antialias = true,
+	font = "Courier New",
+	size = 7,
+	weight = 500,
+	antialias = true,
 }
- 
+
 tblFonts["DefaultFixedOutline"] = {
-    font = "Lucida Console",
-    size = 10,
-    weight = 0,
-    outline = true,
+	font = "Lucida Console",
+	size = 10,
+	weight = 0,
+	outline = true,
 }
- 
+
 tblFonts["MenuItem"] = {
-    font = "Tahoma",
-    size = 12,
-    weight = 500,
+	font = "Tahoma",
+	size = 12,
+	weight = 500,
 }
- 
+
 tblFonts["Default"] = {
-    font = "Tahoma",
-    size = 13,
-    weight = 500,
+	font = "Tahoma",
+	size = 13,
+	weight = 500,
 }
- 
+
 tblFonts["TabLarge"] = {
-    font = "Tahoma",
-    size = 13,
-    weight = 700,
-    shadow = true,
+	font = "Tahoma",
+	size = 13,
+	weight = 700,
+	shadow = true,
 }
- 
+
 tblFonts["DefaultBold"] = {
-    font = "Tahoma",
-    size = 13,
-    weight = 1000,
+	font = "Tahoma",
+	size = 13,
+	weight = 1000,
 }
- 
+
 tblFonts["DefaultUnderline"] = {
-    font = "Tahoma",
-    size = 13,
-    weight = 500,
-    underline = true,
+	font = "Tahoma",
+	size = 13,
+	weight = 500,
+	underline = true,
 }
- 
+
 tblFonts["DefaultSmall"] = {
-    font = "Tahoma",
-    size = 1,
-    weight = 0,
+	font = "Tahoma",
+	size = 1,
+	weight = 0,
 }
- 
+
 tblFonts["DefaultSmallDropShadow"] = {
-    font = "Tahoma",
-    size = 11,
-    weight = 0,
-    shadow = true,
+	font = "Tahoma",
+	size = 11,
+	weight = 0,
+	shadow = true,
 }
- 
+
 tblFonts["DefaultVerySmall"] = {
-    font = "Tahoma",
-    size = 10,
-    weight = 0,
+	font = "Tahoma",
+	size = 10,
+	weight = 0,
 }
- 
+
 tblFonts["DefaultLarge"] = {
-    font = "Tahoma",
-    size = 16,
-    weight = 0,
+	font = "Tahoma",
+	size = 16,
+	weight = 0,
 }
- 
+
 tblFonts["UiBold"] = {
-    font = "Tahoma",
-    size = 12,
-    weight = 1000,
+	font = "Tahoma",
+	size = 12,
+	weight = 1000,
 }
- 
+
 tblFonts["MenuLarge"] = {
-    font = "Verdana",
-    size = 15,
-    weight = 600,
-    antialias = true,
+	font = "Verdana",
+	size = 15,
+	weight = 600,
+	antialias = true,
 }
- 
+
 tblFonts["ConsoleText"] = {
-    font = "Lucida Console",
-    size = 10,
-    weight = 500,
+	font = "Lucida Console",
+	size = 10,
+	weight = 500,
 }
- 
+
 tblFonts["Marlett"] = {
-    font = "Marlett",
-    size = 13,
-    weight = 0,
-    symbol = true,
+	font = "Marlett",
+	size = 13,
+	weight = 0,
+	symbol = true,
 }
- 
+
 tblFonts["Trebuchet24"] = {
-    font = "Trebuchet MS",
-    size = 24,
-    weight = 900,
+	font = "Trebuchet MS",
+	size = 24,
+	weight = 900,
 }
- 
+
 tblFonts["Trebuchet22"] = {
-    font = "Trebuchet MS",
-    size = 22,
-    weight = 900,
+	font = "Trebuchet MS",
+	size = 22,
+	weight = 900,
 }
- 
+
 tblFonts["Trebuchet20"] = {
-    font = "Trebuchet MS",
-    size = 20,
-    weight = 900,
+	font = "Trebuchet MS",
+	size = 20,
+	weight = 900,
 }
- 
+
 tblFonts["Trebuchet19"] = {
-    font = "Trebuchet MS",
-    size = 19,
-    weight = 900,
+	font = "Trebuchet MS",
+	size = 19,
+	weight = 900,
 }
- 
+
 tblFonts["Trebuchet18"] = {
-    font = "Trebuchet MS",
-    size = 18,
-    weight = 900,
+	font = "Trebuchet MS",
+	size = 18,
+	weight = 900,
 }
- 
+
 tblFonts["HUDNumber"] = {
-    font = "Trebuchet MS",
-    size = 40,
-    weight = 900,
+	font = "Trebuchet MS",
+	size = 40,
+	weight = 900,
 }
- 
+
 tblFonts["HUDNumber1"] = {
-    font = "Trebuchet MS",
-    size = 41,
-    weight = 900,
+	font = "Trebuchet MS",
+	size = 41,
+	weight = 900,
 }
- 
+
 tblFonts["HUDNumber2"] = {
-    font = "Trebuchet MS",
-    size = 42,
-    weight = 900,
+	font = "Trebuchet MS",
+	size = 42,
+	weight = 900,
 }
- 
+
 tblFonts["HUDNumber3"] = {
-    font = "Trebuchet MS",
-    size = 43,
-    weight = 900,
+	font = "Trebuchet MS",
+	size = 43,
+	weight = 900,
 }
- 
+
 tblFonts["HUDNumber4"] = {
-    font = "Trebuchet MS",
-    size = 44,
-    weight = 900,
+	font = "Trebuchet MS",
+	size = 44,
+	weight = 900,
 }
- 
+
 tblFonts["HUDNumber5"] = {
-    font = "Trebuchet MS",
-    size = 45,
-    weight = 900,
+	font = "Trebuchet MS",
+	size = 45,
+	weight = 900,
 }
- 
+
 tblFonts["HudHintTextLarge"] = {
-    font = "Verdana",
-    size = 14,
-    weight = 1000,
-    antialias = true,
-    additive = true,
+	font = "Verdana",
+	size = 14,
+	weight = 1000,
+	antialias = true,
+	additive = true,
 }
- 
+
 tblFonts["HudHintTextSmall"] = {
-    font = "Verdana",
-    size = 11,
-    weight = 0,
-    antialias = true,
-    additive = true,
+	font = "Verdana",
+	size = 11,
+	weight = 0,
+	antialias = true,
+	additive = true,
 }
- 
+
 tblFonts["CenterPrintText"] = {
-    font = "Trebuchet MS",
-    size = 18,
-    weight = 900,
-    antialias = true,
-    additive = true,
+	font = "Trebuchet MS",
+	size = 18,
+	weight = 900,
+	antialias = true,
+	additive = true,
 }
- 
+
 tblFonts["DefaultFixed"] = {
-    font = "Lucida Console",
-    size = 10,
-    weight = 0,
+	font = "Lucida Console",
+	size = 10,
+	weight = 0,
 }
- 
+
 tblFonts["DefaultFixedDropShadow"] = {
-    font = "Lucida Console",
-    size = 10,
-    weight = 0,
-    shadow = true,
+	font = "Lucida Console",
+	size = 10,
+	weight = 0,
+	shadow = true,
 }
- 
+
 tblFonts["CloseCaption_Normal"] = {
-    font = "Tahoma",
-    size = 16,
-    weight = 500,
+	font = "Tahoma",
+	size = 16,
+	weight = 500,
 }
- 
+
 tblFonts["CloseCaption_Italic"] = {
-    font = "Tahoma",
-    size = 16,
-    weight = 500,
-    italic = true,
+	font = "Tahoma",
+	size = 16,
+	weight = 500,
+	italic = true,
 }
- 
+
 tblFonts["CloseCaption_Bold"] = {
-    font = "Tahoma",
-    size = 16,
-    weight = 900,
+	font = "Tahoma",
+	size = 16,
+	weight = 900,
 }
- 
+
 tblFonts["CloseCaption_BoldItalic"] = {
-    font = "Tahoma",
-    size = 16,
-    weight = 900,
-    italic = true,
+	font = "Tahoma",
+	size = 16,
+	weight = 900,
+	italic = true,
 }
- 
+
 tblFonts["TargetID"] = {
-    font = "Trebuchet MS",
-    size = 22,
-    weight = 900,
-    antialias = true,
+	font = "Trebuchet MS",
+	size = 22,
+	weight = 900,
+	antialias = true,
 }
- 
+
 tblFonts["TargetIDSmall"] = {
-    font = "Trebuchet MS",
-    size = 18,
-    weight = 900,
-    antialias = true,
+	font = "Trebuchet MS",
+	size = 18,
+	weight = 900,
+	antialias = true,
 }
- 
+
 tblFonts["BudgetLabel"] = {
-    font = "Courier New",
-    size = 14,
-    weight = 400,
-    outline = true,
+	font = "Courier New",
+	size = 14,
+	weight = 400,
+	outline = true,
 }
- 
- 
+
+
 for k,v in SortedPairs( tblFonts ) do
-    surface.CreateFont( k, tblFonts[k] )
- 
-    --print( "Added font '"..k.."'" )
+	surface.CreateFont( k, tblFonts[k] )
+
+	--print( "Added font '"..k.."'" )
 end
 
 local nodrawWeps = {"CHudDeathNotice", "CHudHealth", "CHudBattery", "CHudAmmo", "CHudSecondaryAmmo", "CHudCrosshair", "CHudDamageIndicator"}
@@ -312,11 +312,11 @@ local function CreateCharPortrait()
 	else
 		m = "models/Humans/Group02/Male_04.mdl"
 	end
-	
+
 	if CharacterPortrait and CharacterPortrait:IsValid() then
 		CharacterPortrait:Remove()
 	end
-	
+
 	CharacterPortrait = ClientsideModel(m, RENDERGROUP_OPAQUE)
 	CharacterPortrait:SetNoDraw( true )
 	local bone = CharacterPortrait:LookupBone("ValveBiped.Bip01_Head1")
@@ -364,20 +364,20 @@ end
 
 function DrawPartialCircle( x, y, radius, linewidth, startangle, endangle, aa )
 	-- Thanks for getting me started on how to do this python1320 <3
-    aa = aa or 1
-    startangle = clamp( startangle or 0, 0, 360 )
-    endangle = clamp( endangle or 360, 0, 360 )
-     
-    if endangle < startangle then
-        local temp = endangle
-        endangle = startangle
-        startangle = temp
-    end
+	aa = aa or 1
+	startangle = clamp( startangle or 0, 0, 360 )
+	endangle = clamp( endangle or 360, 0, 360 )
 
-    for i=startangle, endangle, aa do
-        local _i = i * deg2rad         
-        surface.DrawTexturedRectRotated(cos( _i ) * (radius - linewidth) + x,sin( _i ) * (radius - linewidth) + y, linewidth, aa*2, -i )
-    end
+	if endangle < startangle then
+		local temp = endangle
+		endangle = startangle
+		startangle = temp
+	end
+
+	for i=startangle, endangle, aa do
+		local _i = i * deg2rad
+		surface.DrawTexturedRectRotated(cos( _i ) * (radius - linewidth) + x,sin( _i ) * (radius - linewidth) + y, linewidth, aa*2, -i )
+	end
 end
 
 hook.Add( "Think", "JBDisplayPortrait",function()
@@ -411,9 +411,9 @@ hook.Add("HUDPaint","JBCircleHealthDisplay", function()
 		if wAv and wAv:IsValid() then
 			wAv:Remove()
 		end
-		 return 
+		 return
 	end
-	
+
 	if (not wAv or not wAv:IsValid()) and w and w:IsValid() then
 		wAv = vgui.Create("AvatarImage", frame)
 		wAv:SetPos(170,90)
@@ -431,9 +431,9 @@ hook.Add("HUDPaint","JBCircleHealthDisplay", function()
 
 
 	surface.SetTexture()
-    surface.SetDrawColor(0,0,0,255)
-    if w and w:IsValid() then
-    surface.DrawPoly(av_outline)
+	surface.SetDrawColor(0,0,0,255)
+	if w and w:IsValid() then
+	surface.DrawPoly(av_outline)
 	end
 	surface.DrawPoly(idpanel_outline)
 	surface.DrawPoly(ammopanel_outline)
@@ -443,9 +443,9 @@ hook.Add("HUDPaint","JBCircleHealthDisplay", function()
 	surface.DrawRect(x_id+189, y_id+10, 4,31)
 	surface.DrawRect(ScrW()-170-6, y_id+10, 4,31)
 	surface.DrawRect(ScrW()-170-6-6, y_id+10, 4,31)
-	
+
 	--surfavce.DrawPoly(teampanel_outline)
-	
+
 	surface.SetDrawColor(200,200,200,200)
 	if w and w:IsValid() then
 	surface.DrawPoly(av)
@@ -457,11 +457,11 @@ hook.Add("HUDPaint","JBCircleHealthDisplay", function()
 
 	draw.SimpleText(JB.wardenPlayer:Nick(), "Default", 205,105,Color(0,0,0),0,0)
 	end
-    surface.DrawPoly(idpanel)
-    draw.SimpleText(localplayer:Nick(), "TargetID", 160,41,Color(0,0,0),0,0)
+	surface.DrawPoly(idpanel)
+	draw.SimpleText(localplayer:Nick(), "TargetID", 160,41,Color(0,0,0),0,0)
 	surface.DrawPoly(ammopanel)
 
-	
+
 
 	surface.SetDrawColor( 230,230,230,200 )
 
@@ -475,7 +475,7 @@ hook.Add("HUDPaint","JBCircleHealthDisplay", function()
 		end
 		draw.SimpleText(s, "Default", x_info+12, y_info+1,Color(0,0,0))
 	elseif localplayer:Team() == TEAM_PRISONER then
-		local c = "Loading..." 
+		local c = "Loading..."
 		if localplayer.character then
 			c = localplayer.character.name.." \""..localplayer.character.nick.."\" "..localplayer.character.surname
 		end
@@ -493,8 +493,8 @@ hook.Add("HUDPaint","JBCircleHealthDisplay", function()
 	draw.SimpleText(JB:RoundTimeToString(), "TargetID", ScrW()-50, 41,Color(0,0,0),2)
 
 	surface.SetDrawColor( 100,100,100, 150 )
-	
-	
+
+
 	render.ClearStencil()
 	render.SetStencilEnable( true )
 	render.SetStencilFailOperation( STENCILOPERATION_KEEP )
@@ -521,19 +521,19 @@ hook.Add("HUDPaint","JBCircleHealthDisplay", function()
 		cam.IgnoreZ( false )
 	cam.End3D()
 	render.SetStencilEnable( false )
-	
+
 	if h_old > localplayer:Health() then
 		h_old = h_old-1
 	elseif h_old < localplayer:Health() then
 		h_old = h_old+1
 	end
-	
+
 	local add = 0
 	if h_old < 30 then
 		add = 50*math.sin(CurTime()*4)
 	end
-	
-	surface.SetTexture()	
+
+	surface.SetTexture()
 	surface.SetDrawColor( 10,10,10,255 )
 	DrawPartialCircle( portraitpos.x, portraitpos.y, 76, 12, 0, 360, 6 )
 	surface.SetDrawColor( h_color.r+add,h_color.g+add,h_color.b+add,h_color.a ) -- health-color translations, yay!

@@ -68,7 +68,7 @@ function JB:UpdateScoreboard()
 			v:SetVisible(true)
 		end
 	end
-	
+
 	local c = cLeft
 	if cLeft < cRight then
 		c=cRight
@@ -88,7 +88,7 @@ end
 
 function JB:ScoreboardHide()
 	if scorePanel and scorePanel:IsValid() then
-   		scorePanel:Remove()
+		scorePanel:Remove()
    end
 end
 

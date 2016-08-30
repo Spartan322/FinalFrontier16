@@ -8,14 +8,14 @@ end
 
 
 if ( CLIENT ) then
-	SWEP.PrintName			= "Mapconfig LRS"	
+	SWEP.PrintName			= "Mapconfig LRS"
 	SWEP.Author				= "NewBee"
 	SWEP.DrawAmmo 			= false
 	SWEP.DrawCrosshair 		= false
 	SWEP.ViewModelFOV			= 65
 	SWEP.ViewModelFlip		= false
 	SWEP.CSMuzzleFlashes		= false
-	
+
 	SWEP.Slot				= 0
 	SWEP.SlotPos			= 0
 end
@@ -26,7 +26,7 @@ SWEP.Spawnable				= false
 SWEP.AdminSpawnable			= false
 
 SWEP.ViewModel 				= ""
-SWEP.WorldModel 			= "models/weapons/w_knife_t.mdl" 
+SWEP.WorldModel 			= "models/weapons/w_knife_t.mdl"
 
 SWEP.Weight					= 5
 SWEP.AutoSwitchTo			= false
@@ -50,12 +50,12 @@ SWEP.ConfigSelect = nil
 SWEP.PointsDefined = 0
 
 function SWEP:SetupDataTables()
-    self:DTVar( "Int", 0, "AngYaw" )
-    self:DTVar( "Int", 1, "Count" )
+	self:DTVar( "Int", 0, "AngYaw" )
+	self:DTVar( "Int", 1, "Count" )
 end
 
 function SWEP:Initialize()
-	self:SetWeaponHoldType("normal") 
+	self:SetWeaponHoldType("normal")
 end
 if SERVER then
 
@@ -86,14 +86,13 @@ function SWEP:DrawHUD()
 	draw.SimpleTextOutlined(self.PointsDefined.."/"..JB:GetLRs()[self.ConfigSelect].numpoints .." points defined.","DefaultBold",ScrW() / 2, ScrH() / 2+50,Color(255,255,255,255),1,0,1,Color(0,0,0,255))
 end
 
-usermessage.Hook("JBMCFLRNP",function()
-	local p = LocalPlayer()
+net.Receive("JBMCFLRNP",function(len, p)
 	local s = p:GetActiveWeapon()
 	if not s or not s:IsValid() or not s:GetClass() == "jb_mapconfig_lr" then print("INVALID!!!!!!!!!!") return end
 
 	s.PointsDefined = s.PointsDefined + 1
 end)
-usermessage.Hook("JBMCFLR",function()
+net.Receive("JBMCFLR",function(len, p)
 	local f = vgui.Create("pbFrame")
 	f:SetPos(200,200)
 	f:SetSize(300,55+(#JB:GetLRs()*30))
@@ -129,8 +128,8 @@ usermessage.Hook("JBMCFLR",function()
 
 	gui.EnableScreenClicker(true)
 
-	LocalPlayer():GetActiveWeapon().PointsDefined = 0
-	LocalPlayer():GetActiveWeapon().ConfigSelect = 0
+	p:GetActiveWeapon().PointsDefined = 0
+	p:GetActiveWeapon().ConfigSelect = 0
 end)
 
 end
@@ -139,8 +138,8 @@ function SWEP:Deploy()
 	self.Weapon:SetNextPrimaryFire(CurTime() + 1)
 
 	if SERVER then -- doesnt always run on CLient
-		umsg.Start("JBMCFLR",self.Owner)
-		umsg.End()
+		net.Start("JBMCFLR")
+		net.Send(self.Owner)
 	end
 	return true
 end
@@ -148,8 +147,8 @@ end
 function SWEP:Think()
 	if CLIENT then
 		if not self.CMdl or not IsValid(self.CMdl) then
-    		self.CMdl = ClientsideModel("models/props_junk/PopCan01a.mdl")
-   	 	end
+			self.CMdl = ClientsideModel("models/props_junk/PopCan01a.mdl")
+		end
 
 		local trace = self.Owner:GetEyeTrace()
 		self.CMdl:SetPos(trace.HitPos)
@@ -158,12 +157,12 @@ function SWEP:Think()
 end
 
 function SWEP:SecondaryAttack()
-	
+
 end
 
 function SWEP:PrimaryAttack()
 	if CLIENT then return end
-	 
+
 	if not self.ConfigSelect then JB:DebugPrint("No LR selected.") return end
 
 	self.PointsDefined = self.PointsDefined + 1
@@ -176,21 +175,21 @@ function SWEP:PrimaryAttack()
 	JB:GetMapConfigLR()[JB:GetLRs()[self.ConfigSelect].name][self.PointsDefined] = trace.HitPos
 	JB:SaveMapConfigLR()
 
-	
+
 
 	JB:DebugPrint("New LR point defined.")
 
 	if self.PointsDefined+1 > JB:GetLRs()[self.ConfigSelect].numpoints then
-		umsg.Start("JBMCFLR",self.Owner)
-		umsg.End()
+		net.Start("JBMCFLR")
+		net.Send(self.Owner)
 		self.PointsDefined = 0
 		self.ConfigSelect = 0
 
 		return
 	end
 
-	umsg.Start("JBMCFLRNP",self.Owner)
-	umsg.End()
+	net.Start("JBMCFLRNP")
+	net.Send(self.Owner)
 end
 
 SWEP.NextReload = CurTime()

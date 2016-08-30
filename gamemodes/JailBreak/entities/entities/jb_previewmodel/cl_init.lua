@@ -18,9 +18,9 @@ function ENT:Draw()
 		self:SetSequence(seq)
 	end
 	cam.IgnoreZ(false)
-	
+
 	self:DrawModel()
-	
+
 	if not self.Prisoner then return end
 	cam.IgnoreZ(true)
 		local BonePos , BoneAng = self:GetBonePosition(self:LookupBone("ValveBiped.Bip01_Head1"))
@@ -30,7 +30,7 @@ function ENT:Draw()
 		end
 		local pos= BonePos+(BoneAng:Right()*mul)+Vector(0,0,3.7)
 		render.SetMaterial(Material( "cs_italy/black" ))
-		
-		render.DrawQuadEasy( pos,self:GetAngles():Forward(),6,1.5,Color( 255, 255, 255, 255 ), 0) 
+
+		render.DrawQuadEasy( pos,self:GetAngles():Forward(),6,1.5,Color( 255, 255, 255, 255 ), 0)
 	cam.IgnoreZ(false)
 end

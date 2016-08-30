@@ -13,16 +13,16 @@ function ENT:Initialize()
 	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
 	self.Entity:SetSolid( SOLID_VPHYSICS )
 	self.Entity:DrawShadow( false )
-	
+
 	self.Entity:SetCollisionGroup( COLLISION_GROUP_WEAPON )
 	self.Entity:SetNetworkedString("Owner", "World")
-	
+
 	local phys = self.Entity:GetPhysicsObject()
-	
+
 	if (phys:IsValid()) then
 		phys:Wake()
 	end
-	
+
 	self.timer = CurTime() + 3
 end
 

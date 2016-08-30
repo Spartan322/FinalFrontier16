@@ -18,7 +18,7 @@ end
 function JB:AddEntityToMapConfig(e,p,a)
 	if not e or not p or not a then return end
 
-	local t = 
+	local t =
 	{
 		ent = e,
 		pos = p,

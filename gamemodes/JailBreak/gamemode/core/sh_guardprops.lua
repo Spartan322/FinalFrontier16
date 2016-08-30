@@ -25,7 +25,7 @@ if CLIENT then
 		local cbut=vgui.Create("pbActionButton",propFrame)
 		cbut:SetSize(25,25)
 		cbut:SetPos(propFrame:GetWide()-40,14)
-		cbut.DoClick = function() 
+		cbut.DoClick = function()
 			if propFrame and propFrame:IsValid() then
 				propFrame:Remove()
 				gui.EnableScreenClicker(false)
@@ -60,14 +60,19 @@ if CLIENT then
 				RunConsoleCommand("jb_spawnguardprop",k)
 			end
 		end
-		
+
 		gui.EnableScreenClicker(true)
 	end)
 elseif SERVER then
 	concommand.Add("jb_spawnguardprop",function(p,c,a)
 		local n=tonumber(a[1])
 		if p:Team() ~= TEAM_GUARD or not props[n] then return
-		elseif #ents.FindByClass(props[n].ent) >= props[n].max then umsg.Start("JNC",p) umsg.String("You can not spawn any more of these.") umsg.String("boom") umsg.End() return end
+		elseif #ents.FindByClass(props[n].ent) >= props[n].max then
+			net.Start("JNC")
+			net.WriteString("You can not spawn any more of these.")
+			net.WriteString("boom")
+			net.Send(p)
+		return end
 
 		local e=ents.Create(props[n].ent)
 		e:SetPos(p:EyePos()+p:GetAngles():Forward()*50)

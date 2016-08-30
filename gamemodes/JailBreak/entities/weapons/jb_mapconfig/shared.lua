@@ -8,14 +8,14 @@ end
 
 
 if ( CLIENT ) then
-	SWEP.PrintName			= "Mapconfig"	
+	SWEP.PrintName			= "Mapconfig"
 	SWEP.Author				= "NewBee"
 	SWEP.DrawAmmo 			= false
 	SWEP.DrawCrosshair 		= false
 	SWEP.ViewModelFOV			= 65
 	SWEP.ViewModelFlip		= false
 	SWEP.CSMuzzleFlashes		= false
-	
+
 	SWEP.Slot				= 0
 	SWEP.SlotPos			= 0
 end
@@ -26,7 +26,7 @@ SWEP.Spawnable				= false
 SWEP.AdminSpawnable			= false
 
 SWEP.ViewModel 				= ""
-SWEP.WorldModel 			= "models/weapons/w_knife_t.mdl" 
+SWEP.WorldModel 			= "models/weapons/w_knife_t.mdl"
 
 SWEP.Weight					= 5
 SWEP.AutoSwitchTo			= false
@@ -60,12 +60,12 @@ SWEP.Avalable = {
 }
 
 function SWEP:SetupDataTables()
-    self:DTVar( "Int", 0, "AngYaw" )
-    self:DTVar( "Int", 1, "Count" )
+	self:DTVar( "Int", 0, "AngYaw" )
+	self:DTVar( "Int", 1, "Count" )
 end
 
 function SWEP:Initialize()
-	self:SetWeaponHoldType("normal") 
+	self:SetWeaponHoldType("normal")
 end
 
 function SWEP:Deploy()
@@ -79,8 +79,8 @@ function SWEP:Think()
 	if CLIENT then
 		if not self.Avalable[self:GetDTInt(1)] then return end
 		if not self.CMdl or not IsValid(self.CMdl )) then
-    		self.CMdl = ClientsideModel("models/weapons/w_knife_t.mdl")
-   	 	end
+			self.CMdl = ClientsideModel("models/weapons/w_knife_t.mdl")
+		end
 
 		local trace = self.Owner:GetEyeTrace()
 
@@ -103,8 +103,8 @@ function SWEP:PrimaryAttack()
 	if not self.Avalable[self:GetDTInt(1)] then return end
 
 	local trace = self.Owner:GetEyeTrace()
-	
- 	JB:AddEntityToMapConfig(self.Avalable[self:GetDTInt(1) or 1],trace.HitPos+Vector(0,0,10),Angle(0,self:GetDTInt(0),0))
+
+	JB:AddEntityToMapConfig(self.Avalable[self:GetDTInt(1) or 1],trace.HitPos+Vector(0,0,10),Angle(0,self:GetDTInt(0),0))
 end
 
 SWEP.NextReload = CurTime()

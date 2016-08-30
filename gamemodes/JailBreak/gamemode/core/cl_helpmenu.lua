@@ -46,12 +46,12 @@ function toggleHelp() --create the help frame
 		but.DoClick = function()
 			curtab = k
 		end
-	end	
-	
+	end
+
 	gui.EnableScreenClicker(true)
 end
 concommand.Add("jb_togglehelp", toggleHelp)
-usermessage.Hook("JBH", toggleHelp)
+net.Receive("JBH", toggleHelp)
 
 addHelp("Rules","These are the rules that apply in PrisonBreak2. \nThese might be diffirent from this server's rules, server rules always go first. \nIf you break one of these rules you will be muted, teambanned or blocked from joining this server. \n \nRules: \n#1 Report possible exploits, don't use them. \n#2 Read these rules. \n#3 Do not abuse guns in any way. \n#4 Punishments are the server admin's decision, the developer can not help you. \n \n#6 Guards only, do not shoot prisoners at random. \n#7 Guards only, do not allow -day commands, like a 'freeday' or a 'poolday'. \n#8 Guards only, do not accept last request not giving through the system. \n#9 Guards only, only the warden (game mechanic) may give orders, if the warden is down the prisoners may not be commanded anymore. \n#10 Guards only, listen to the warden, he also leaders the guard team. \n\n#11 Prisoners only, do not spam messages about you being randomly shot, it happens sometimes, if one guard does it over and over again you can report them. \n \n \n \n \n \n")
 addHelp("Credits", [[Gamemode credits.

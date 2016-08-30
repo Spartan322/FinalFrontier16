@@ -258,31 +258,31 @@ surface.CreateFont( "JailBreakTitleFont", {
 	size        = 128,
 	weight      = 400,
 	antialias   = true,
-} )  
+} )
 surface.CreateFont( "JailBreakTitleFontLevel2", {
 	font        = "Chinese Rocks rg",
 	size        = 60,
 	weight      = 400,
 	antialias   = true,
-} ) 
+} )
 surface.CreateFont( "JailBreakTitleFontSmall", {
 	font        = "Chinese Rocks rg",
 	size        = 100,
 	weight      = 400,
 	antialias   = true,
-} )  
+} )
 surface.CreateFont( "JailBreakTitleFontSmallest", {
 	font        = "Chinese Rocks rg",
 	size        = 40,
 	weight      = 400,
 	antialias   = true,
-} ) 
+} )
 surface.CreateFont( "JailbreakMenuThingMainButton", {
 	font        = "Sports Jersey",
 	size        = 100,
 	weight      = 400,
 	antialias   = true,
-} ) 
+} )
 
 -- entity -1585.3541 -359.9099 165.6040
 -- cam -1581.458496 -396.353424 222.742065setang 0.340060 89.003883 0.000000
@@ -313,17 +313,17 @@ hook.Add("PostDrawTranslucentRenderables","123PostDrawLolMeowRgrg", function()
 	if not preview or not preview:IsValid() then
 		preview = ents.FindByClass("jb_previewmodel")[1]
 	end
-	
+
 	selection = 0
-	
-	local pos = LocalPlayer():GetEyeTrace().HitPos			
+
+	local pos = LocalPlayer():GetEyeTrace().HitPos
 	local xMouse, yMouse = WorldToScreen(Vector(pos.x,mmp.y,pos.z),mmp,Angle(0,0,90))
-	
+
 	render.SetToneMappingScaleLinear(Vector(0.8,1,3))
 	cam.Start3D2D(mmp,Angle(0,0,90), .1)
 		surface.SetDrawColor(200,200,200)
 		surface.DrawRect(x-500,y-500,512*7,512*4)
-		
+
 		surface.SetDrawColor(255,255,255,200)
 		surface.SetTexture(bg)
 		for i=0,7 do
@@ -334,19 +334,19 @@ hook.Add("PostDrawTranslucentRenderables","123PostDrawLolMeowRgrg", function()
 		--####################
 		--##   MAINMENU    ##
 		--####################
-		
+
 		local MouseIsGood = (xMouse > x+1725 and xMouse < x+2275)
 		draw.SimpleText("Welcome to Jailbreak3,", "HUDNumber5",x+2000,y,Color(0,0,0,255),1,0)
 		draw.SimpleText(LocalPlayer():Nick(), "JailBreakTitleFont",x+2000,y+48,Color(0,0,0,255),1,0)
-		
+
 		draw.SimpleText("Select a team below", "HUDNumber5",x+2000,y+180,Color(0,0,0,255),1,0)
-		
+
 		local cA , cB , cC = Color(255,255,255,255),Color(255,255,255,255),Color(255,255,255,255)
-		
+
 		if not JB:CanBeGuard() then
 			cB = Color(100,100,100,255)
 		end
-		
+
 		if MouseIsGood and yMouse > y+230 and yMouse < y+330 then
 			cA = Color(200,145,23,255)
 			selection = 5
@@ -358,18 +358,18 @@ hook.Add("PostDrawTranslucentRenderables","123PostDrawLolMeowRgrg", function()
 		elseif MouseIsGood and yMouse > y+450 and yMouse < y+550 then
 			cC = Color(200,145,23,255)
 			selection = 7
-		end	
-		
+		end
+
 		surface.SetDrawColor(0,0,0)
 		surface.DrawRect(x+1725,y+230,550,100)
 		draw.SimpleText("Prisoners", "JailbreakMenuThingMainButton",x+2000,y+223,cA,1,0)
-		
+
 		surface.DrawRect(x+1725,y+340,550,100)
 		draw.SimpleText("Guards", "JailbreakMenuThingMainButton",x+2000,y+333,cB,1,0)
-		
+
 		surface.DrawRect(x+1725,y+450,550,100)
 		draw.SimpleText("Spectators", "JailbreakMenuThingMainButton",x+2000,y+443,cC,1,0)
-		
+
 		if not JB:CanBeGuard() then
 		surface.SetDrawColor(255,255,255,255)
 		surface.SetTexture(full)
@@ -381,7 +381,7 @@ hook.Add("PostDrawTranslucentRenderables","123PostDrawLolMeowRgrg", function()
 
 		for i=0,18 do
 			local s = tostring(2.30-(i*0.10))
-			
+
 			while string.len(s) < 4 do
 				if string.len(s) == 1 then
 					s = s..".00"
@@ -393,7 +393,7 @@ hook.Add("PostDrawTranslucentRenderables","123PostDrawLolMeowRgrg", function()
 			draw.SimpleText(s.." m", "TargetID",x+100,y+82+(i*50),Color(0,0,0,255),0,0)
 			surface.DrawRect(x+100,y+100+(i*50),760,3)
 		end
-		
+
 		local t
 		if selectedTeam == "guard" then
 			t = JB.Characters.Guard[prisoner]
@@ -405,7 +405,7 @@ hook.Add("PostDrawTranslucentRenderables","123PostDrawLolMeowRgrg", function()
 			if preview and preview:IsValid() then
 				preview.Prisoner = true
 			end
-		end	
+		end
 		local MouseIsGood = (yMouse > y+252 and yMouse < y+252+120)
 		if xMouse > x+435 and xMouse < x+435+(410/2) and MouseIsGood  then
 			draw.SimpleText("< Previous", "HUDNumber5",x+435,y+252,Color(0,0,150,255),0,0)
@@ -413,20 +413,20 @@ hook.Add("PostDrawTranslucentRenderables","123PostDrawLolMeowRgrg", function()
 		else
 			draw.SimpleText("< Previous", "HUDNumber5",x+435,y+252,Color(0,0,0,255),0,0)
 		end
-		
+
 		if xMouse > x+435+(410/2) and xMouse < x+435+410 and MouseIsGood then
 			draw.SimpleText("Next >", "HUDNumber5",x+845,y+252,Color(0,0,150,255),2,0)
 			selection = 2
 		else
 			draw.SimpleText("Next >", "HUDNumber5",x+845,y+252,Color(0,0,0,255),2,0)
 		end
-		
+
 		surface.DrawRect(x+435,y+490,410,305)
 		surface.DrawRect(x+435,y+445,410,40)
 		draw.DrawText(t.name.." \""..t.nick.."\" "..t.surname, "JailBreakTitleFontSmallest",x+445,y+446,Color(255,255,255),0,0)
-		
+
 		draw.DrawText(JB.util.FormatLine(t.background,"TargetID",390), "TargetID",x+445,y+495,Color(255,255,255),0,0)
-		
+
 		if xMouse > x+435 and xMouse < x+435+410 and yMouse > y+805 and yMouse < y+805+40 then
 			lenOne = Lerp(0.20,lenOne,406)
 			selection = 3
@@ -439,21 +439,21 @@ hook.Add("PostDrawTranslucentRenderables","123PostDrawLolMeowRgrg", function()
 		else
 			lenTwo = Lerp(0.20,lenTwo,36)
 		end
-		
+
 		surface.DrawRect(x+435,y+806,410,40)
 		surface.DrawRect(x+435,y+856,410,40)
-		
+
 		surface.SetDrawColor(200,145,23,255)
-		
+
 		surface.DrawRect(x+437,y+808,lenOne,36)
 		surface.DrawRect(x+437,y+858,lenTwo,36)
-		
+
 		draw.DrawText(">", "HUDNumber3",x+441,y+803,Color(0,0,0),0,0)
 		draw.DrawText("SELECT CHARACTER", "HUDNumber3",x+480,y+805,Color(255,255,255),0,0)
-				
+
 		draw.DrawText(">", "HUDNumber3",x+441,y+853,Color(0,0,0),0,0)
 		draw.DrawText("BACK TO MAIN", "HUDNumber3",x+480,y+855,Color(255,255,255),0,0)
-				
+
 		surface.SetDrawColor(0,0,0)
 		if preview and preview:IsValid() then
 			preview.TargetModel = t.model
@@ -461,7 +461,7 @@ hook.Add("PostDrawTranslucentRenderables","123PostDrawLolMeowRgrg", function()
 		surface.DrawRect(x+435,y+315,120,120)
 		surface.DrawRect(x+580,y+315,120,120)
 		surface.DrawRect(x+725,y+315,120,120)
-		
+
 		surface.SetDrawColor(255,255,255,255)
 		surface.SetTexture(t.img1)
 		surface.DrawTexturedRect(x+437,y+317,116,116)
@@ -478,11 +478,11 @@ local nextPress = CurTime()
 hook.Add( "GUIMouseReleased", "JB1232412fKeyPressedHook", function(mc)
 	if mc~=MOUSE_LEFT or (not selection) or nextPress > CurTime() then return end
 	nextPress = CurTime()+0.2
-	
+
 	if selection == 1 then
 		prisoner = prisoner-1
 		if prisoner < 1 then
-			prisoner = #JB.Characters.Prisoner	
+			prisoner = #JB.Characters.Prisoner
 		end
 	elseif selection == 2 then
 		prisoner = prisoner+1
@@ -490,7 +490,7 @@ hook.Add( "GUIMouseReleased", "JB1232412fKeyPressedHook", function(mc)
 			prisoner = 1
 		end
 	elseif selection == 4 then
-		RunConsoleCommand("jb_menu_backtomain")		
+		RunConsoleCommand("jb_menu_backtomain")
 		JB.MainMenuCharacterScreen = false
 		JB:ResetSkipMenuMoves()
 	elseif selection == 3 then
@@ -505,7 +505,7 @@ hook.Add( "GUIMouseReleased", "JB1232412fKeyPressedHook", function(mc)
 	end
 end)
 
-usermessage.Hook("JOMM", function()
+net.Receive("JOMM", function()
 	JB.MainMenuEnabled = true
 	gui.EnableScreenClicker(true)
 end)
@@ -514,7 +514,7 @@ end)
 JB.MainMenuEnabled = true
 gui.EnableScreenClicker(true)
 
-usermessage.Hook("JCMM", function()
+net.Receive("JCMM", function()
 	JB.MainMenuEnabled = false
 	gui.EnableScreenClicker(false)
 end)

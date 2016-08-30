@@ -19,8 +19,8 @@ JB.notify.icons["hint"] =surface.GetTextureID("prisonbreak/notices/hint")
 function meta:SetText(s)
 	if not s then s="Unidentified" end
 	surface.SetFont("DefaultBold")
-	
-	local w=surface.GetTextSize(s)	
+
+	local w=surface.GetTextSize(s)
 	self.Text=s
 	self.w=(w+60)
 end
@@ -39,15 +39,15 @@ function meta:Draw()
 	local h=self.h
 	local icon=self.Icon
 	local c=self.Color
-	
+
 	draw.RoundedBox(4,x,y,w,h,Color(0,0,0,200))
 	draw.RoundedBox(4,x+2,y+2,w-4,h-4,c)
 	draw.RoundedBox(4,x+3,y+3,w-6,(h-6)/2,Color(255,255,255,100))
-	
+
 	surface.SetDrawColor( 255, 255, 255, 255 )
 	surface.SetTexture(icon)
 	surface.DrawTexturedRect(x+5,y-8,40,40)
-	
+
 	draw.SimpleText(t,"DefaultBold",x+50,y+11,Color(0,0,0),0,1)
 end
 function meta:CalculatePos(val)
@@ -63,7 +63,7 @@ function meta:CalculatePos(val)
 	if self.x>ScrW()+1 then
 		table.remove(JB.notify.tbl,val)
 	end
-end	
+end
 
 function JB.notify.create(t,i,c)
 	local obj={}
@@ -72,14 +72,14 @@ function JB.notify.create(t,i,c)
 	else
 		i=string.lower(i)
 	end
-	
+
 	if not c then
 		c=Color(213,213,213)
 	end
-	
+
 	setmetatable(obj,meta)
 	meta.__index = meta
-	
+
 	obj.x=ScrW()
 	obj.movex= ScrW()
 	obj.y=120
@@ -90,9 +90,9 @@ function JB.notify.create(t,i,c)
 	obj.Color=c
 	obj.Icon=JB.notify.icons[i]
 	obj.Close=false
-	
+
 	surface.PlaySound("ambient/levels/canals/drip"..math.random(1,4)..".wav")
-	
+
 	table.insert(JB.notify.tbl,obj)
 	timer.Simple(4,function()
 		obj.Close=true
@@ -100,9 +100,9 @@ function JB.notify.create(t,i,c)
 	end)
 end
 
-usermessage.Hook("JNC",function(u)
-	local m=u:ReadString()
-	local i=u:ReadString() or nil
+net.Receive("JNC",function(len, p)
+	local m=net.ReadString()
+	local i=net.ReadString() or nil
 
 	JB.notify.create(m,i)
 end)

@@ -8,14 +8,14 @@ end
 
 
 if ( CLIENT ) then
-	SWEP.PrintName			= "knife"	
+	SWEP.PrintName			= "knife"
 	SWEP.Author				= "NewBee"
 	SWEP.DrawAmmo 			= false
 	SWEP.DrawCrosshair 		= false
 	SWEP.ViewModelFOV			= 65
 	SWEP.ViewModelFlip		= false
 	SWEP.CSMuzzleFlashes		= false
-	
+
 	SWEP.Slot				= 2
 	SWEP.SlotPos			= 0
 end
@@ -26,7 +26,7 @@ SWEP.Spawnable				= false
 SWEP.AdminSpawnable			= false
 
 SWEP.ViewModel 				= "models/weapons/v_knife_t.mdl"
-SWEP.WorldModel 			= "models/weapons/w_knife_t.mdl" 
+SWEP.WorldModel 			= "models/weapons/w_knife_t.mdl"
 
 SWEP.Weight					= 5
 SWEP.AutoSwitchTo			= false
@@ -49,17 +49,17 @@ SWEP.WallSound 				= Sound("weapons/knife/knife_hitwall1.wav")
 SWEP.DeploySound				= Sound("weapons/knife/knife_deploy1.wav")
 SWEP.Ragdollhit 				= Sound("weapons/knife/knife_stab.wav")
 
-function SWEP:Think()		
+function SWEP:Think()
 	if self.Owner:KeyDown(IN_SPEED) and self.Owner:GetVelocity():Length() > 10 then
-		self:SetWeaponHoldType("melee") 
-	else	
-		self:SetWeaponHoldType("knife") 
+		self:SetWeaponHoldType("melee")
+	else
+		self:SetWeaponHoldType("knife")
 	end
 end
 
 
 function SWEP:Initialize()
-	self:SetWeaponHoldType("knife") 
+	self:SetWeaponHoldType("knife")
 end
 
 function SWEP:Deploy()
@@ -74,8 +74,8 @@ end
 
 function SWEP:PrimaryAttack()
 	local trace = self.Owner:GetEyeTrace()
-	
-    self.Weapon:SetNextPrimaryFire(CurTime() + 0.5)
+
+	self.Weapon:SetNextPrimaryFire(CurTime() + 0.5)
 	self.Owner:SetAnimation( PLAYER_ATTACK1 )
 
 	if trace.HitPos and trace.HitPos:Distance(self.Owner:EyePos()) < 70 then
@@ -90,13 +90,13 @@ function SWEP:PrimaryAttack()
 				trace.Entity:TakeDamage(30)
 			end
 			if trace.Entity:IsPlayer() then
-				self.Weapon:EmitSound(self.Ragdollhit,100,math.random(80,120))	
+				self.Weapon:EmitSound(self.Ragdollhit,100,math.random(80,120))
 			else
-				self.Weapon:EmitSound(self.WallSound,100,math.random(80,120))	
+				self.Weapon:EmitSound(self.WallSound,100,math.random(80,120))
 			end
 		else
-			self.Weapon:EmitSound(self.WallSound,100,math.random(80,120))	
-		end		
+			self.Weapon:EmitSound(self.WallSound,100,math.random(80,120))
+		end
 	else
 		self.Weapon:SendWeaponAnim(ACT_VM_MISSCENTER)
 		if CLIENT then return end
