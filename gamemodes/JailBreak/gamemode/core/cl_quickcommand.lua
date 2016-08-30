@@ -69,10 +69,10 @@ hook.Add( "HUDPaint", "JBDrawQCMDMenu", function() //Good luck figuring all this
 		surface.SetDrawColor( crygray, crygray, crygray, global_mul * 200 )
 		surface.DrawTexturedRectRotated( cryx + cryaddx, cryy + cryaddy, 100 * global_mul, 100 * global_mul,0)
 		
-		draw.SimpleTextOutlined(JB.qcmds[numb].Text, "DefaultBold",  cryx + cryaddx, cryy + cryaddy+10, Color(255,255,255,global_mul * 200), 1,1, 1, Color(0,0,0,global_mul * 100));
+		draw.SimpleTextOutlined(JB.qcmds[numb].Text, "DefaultBold",  cryx + cryaddx, cryy + cryaddy+10, Color(255,255,255,global_mul * 200), 1,1, 1, Color(0,0,0,global_mul * 100))
 		
-		surface.SetTexture(JB.qcmds[numb].Icon);
-		surface.DrawTexturedRect(cryx + cryaddx - 12.5, cryy + cryaddy - 20,25,25);
+		surface.SetTexture(JB.qcmds[numb].Icon)
+		surface.DrawTexturedRect(cryx + cryaddx - 12.5, cryy + cryaddy - 20,25,25)
 		numb = numb + 1
 		
 	end
@@ -95,7 +95,7 @@ local function EnableMenu( b )
 	
 end
 
-local enabled = false;
+local enabled = false
 function JB:ToggleQCMD(b)
 	
 

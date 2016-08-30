@@ -255,42 +255,42 @@ tblFonts["BudgetLabel"] = {
  
  
 for k,v in SortedPairs( tblFonts ) do
-    surface.CreateFont( k, tblFonts[k] );
+    surface.CreateFont( k, tblFonts[k] )
  
-    --print( "Added font '"..k.."'" );
+    --print( "Added font '"..k.."'" )
 end
 
 local nodrawWeps = {"CHudDeathNotice", "CHudHealth", "CHudBattery", "CHudAmmo", "CHudSecondaryAmmo", "CHudCrosshair", "CHudDamageIndicator"}
 function JB:HUDShouldDraw(name)
 	if table.HasValue(nodrawWeps, name) then
-		return false;
+		return false
 	end
-	return true;
+	return true
 end
 
 
-local clamp,sin,cos,rad =math.Clamp,math.sin,math.cos,math.rad;
-local deg2rad = math.pi / 180;
-local screenpos = Vector( 90, 90, 0 );
-local portraitpos = screenpos;
-local displayportrait = false;
-local pos;
-local target;
-local ang;
-local newpos;
-local fov = 85;
-local CharacterPortrait;
-local h_old = 0;
-local h_color = Color(200,0,0);
-local x_id = 135;
-local y_id = 40;
-local x_info = x_id+15;
-local y_info = y_id+24;
-local x_team,y_team = x_info,y_info + 2;
+local clamp,sin,cos,rad =math.Clamp,math.sin,math.cos,math.rad
+local deg2rad = math.pi / 180
+local screenpos = Vector( 90, 90, 0 )
+local portraitpos = screenpos
+local displayportrait = false
+local pos
+local target
+local ang
+local newpos
+local fov = 85
+local CharacterPortrait
+local h_old = 0
+local h_color = Color(200,0,0)
+local x_id = 135
+local y_id = 40
+local x_info = x_id+15
+local y_info = y_id+24
+local x_team,y_team = x_info,y_info + 2
 -- Poly stuff...
 local circle = {}
 for i=1,15 do
-	circle[i] = {x = portraitpos.x + cos(rad(i*360)/15)*60,y = portraitpos.y + sin(rad(i*360)/15)*60};
+	circle[i] = {x = portraitpos.x + cos(rad(i*360)/15)*60,y = portraitpos.y + sin(rad(i*360)/15)*60}
 end
 
 local idpanel = {{x=x_id,y=y_id},{x=x_id+170,y=y_id},{x=x_id+180,y=y_id+10},{x=x_id+180,y=y_id+23},{x=x_id+15,y=y_id+23}}
@@ -306,20 +306,20 @@ local av_outline = {{x=168,y=88},{x=x_id+181,y=88},{x=x_id+181,y=106},{x=x_id+16
 local tri = {{x=ScrW()/2,y=ScrH()/2},{x=ScrW()/2+18,y=ScrH()/2-9},{x=ScrW()/2+18,y=ScrH()/2+9}}
 local tri_outline = {{x=ScrW()/2-1,y=ScrH()/2},{x=ScrW()/2+19,y=ScrH()/2-10},{x=ScrW()/2+19,y=ScrH()/2+10}}
 local function CreateCharPortrait()
-	local m;
+	local m
 	if LocalPlayer() and LocalPlayer():IsValid() then
-		m = LocalPlayer():GetModel() or "models/Humans/Group02/Male_04.mdl";
+		m = LocalPlayer():GetModel() or "models/Humans/Group02/Male_04.mdl"
 	else
 		m = "models/Humans/Group02/Male_04.mdl"
 	end
 	
 	if CharacterPortrait and CharacterPortrait:IsValid() then
-		CharacterPortrait:Remove();
+		CharacterPortrait:Remove()
 	end
 	
-	CharacterPortrait = ClientsideModel(m, RENDERGROUP_OPAQUE);
+	CharacterPortrait = ClientsideModel(m, RENDERGROUP_OPAQUE)
 	CharacterPortrait:SetNoDraw( true )
-	local bone = CharacterPortrait:LookupBone("ValveBiped.Bip01_Head1");
+	local bone = CharacterPortrait:LookupBone("ValveBiped.Bip01_Head1")
 
 	if bone then
 		pos, ang = CharacterPortrait:GetBonePosition( bone )
@@ -364,19 +364,19 @@ end
 
 function DrawPartialCircle( x, y, radius, linewidth, startangle, endangle, aa )
 	-- Thanks for getting me started on how to do this python1320 <3
-    aa = aa or 1;
-    startangle = clamp( startangle or 0, 0, 360 );
-    endangle = clamp( endangle or 360, 0, 360 );
+    aa = aa or 1
+    startangle = clamp( startangle or 0, 0, 360 )
+    endangle = clamp( endangle or 360, 0, 360 )
      
     if endangle < startangle then
-        local temp = endangle;
-        endangle = startangle;
-        startangle = temp;
+        local temp = endangle
+        endangle = startangle
+        startangle = temp
     end
 
     for i=startangle, endangle, aa do
-        local _i = i * deg2rad;         
-        surface.DrawTexturedRectRotated(cos( _i ) * (radius - linewidth) + x,sin( _i ) * (radius - linewidth) + y, linewidth, aa*2, -i );
+        local _i = i * deg2rad         
+        surface.DrawTexturedRectRotated(cos( _i ) * (radius - linewidth) + x,sin( _i ) * (radius - linewidth) + y, linewidth, aa*2, -i )
     end
 end
 
@@ -384,32 +384,32 @@ hook.Add( "Think", "JBDisplayPortrait",function()
 	local localplayer = LocalPlayer()
 	if (localplayer:Team() ~= TEAM_PRISONER and localplayer:Team() ~= TEAM_GUARD) then return end
 
-	DisplayCharPortrait( true );
+	DisplayCharPortrait( true )
 end)
 
-local wAv;
-local awP;
+local wAv
+local awP
 
-local count = 0;
-local count_start = CurTime();
-local count_g = 200;
+local count = 0
+local count_start = CurTime()
+local count_g = 200
 local color_r = 0
 local count_cir = 360
 local count_title = "No title set."
 function JB:HUDStartTimer(t,n)
-	count = t;
-	count_start = CurTime();
-	count_g = 200;
+	count = t
+	count_start = CurTime()
+	count_g = 200
 	color_r = 0
 	count_cir = 360
-	count_title = n;
+	count_title = n
 end
 hook.Add("HUDPaint","JBCircleHealthDisplay", function()
-	local localplayer = LocalPlayer();
-	local w = JB.wardenPlayer;
+	local localplayer = LocalPlayer()
+	local w = JB.wardenPlayer
 	if not localplayer or not localplayer:IsValid() or (localplayer:Team() ~= TEAM_PRISONER and localplayer:Team() ~= TEAM_GUARD) then
 		if wAv and wAv:IsValid() then
-			wAv:Remove();
+			wAv:Remove()
 		end
 		 return 
 	end
@@ -419,147 +419,147 @@ hook.Add("HUDPaint","JBCircleHealthDisplay", function()
 		wAv:SetPos(170,90)
 		wAv:SetSize(32, 32)
 		wAv:SetPlayer(w, 32 )
-		awP = w;
+		awP = w
 	elseif wAv and wAv:IsValid() and (not w or not w:IsValid()) then
-		wAv:Remove();
+		wAv:Remove()
 	end
 
 	if awP ~= w and wAv and wAv:IsValid() and w and w:IsValid() then
 		wAv:SetPlayer(w,32)
-		awP = w;
+		awP = w
 	end
 
 
-	surface.SetTexture();
-    surface.SetDrawColor(0,0,0,255);
+	surface.SetTexture()
+    surface.SetDrawColor(0,0,0,255)
     if w and w:IsValid() then
-    surface.DrawPoly(av_outline);
+    surface.DrawPoly(av_outline)
 	end
-	surface.DrawPoly(idpanel_outline);
-	surface.DrawPoly(ammopanel_outline);
+	surface.DrawPoly(idpanel_outline)
+	surface.DrawPoly(ammopanel_outline)
 	surface.DrawRect(ScrW()-171,y_id+23,132,18)
-	surface.DrawRect(x_info, y_info, 166,17);
-	surface.DrawRect(x_id+183, y_id+10, 4,31);
-	surface.DrawRect(x_id+189, y_id+10, 4,31);
-	surface.DrawRect(ScrW()-170-6, y_id+10, 4,31);
-	surface.DrawRect(ScrW()-170-6-6, y_id+10, 4,31);
+	surface.DrawRect(x_info, y_info, 166,17)
+	surface.DrawRect(x_id+183, y_id+10, 4,31)
+	surface.DrawRect(x_id+189, y_id+10, 4,31)
+	surface.DrawRect(ScrW()-170-6, y_id+10, 4,31)
+	surface.DrawRect(ScrW()-170-6-6, y_id+10, 4,31)
 	
-	--surfavce.DrawPoly(teampanel_outline);
+	--surfavce.DrawPoly(teampanel_outline)
 	
-	surface.SetDrawColor(200,200,200,200);
+	surface.SetDrawColor(200,200,200,200)
 	if w and w:IsValid() then
 	surface.DrawPoly(av)
 	local t = "Warden"
 	if not w:Alive() then
 		t = t.." (dead)"
 	end
-	draw.SimpleText(t, "DefaultBold", 205,90,Color(0,0,0),0,0);
+	draw.SimpleText(t, "DefaultBold", 205,90,Color(0,0,0),0,0)
 
-	draw.SimpleText(JB.wardenPlayer:Nick(), "Default", 205,105,Color(0,0,0),0,0);
+	draw.SimpleText(JB.wardenPlayer:Nick(), "Default", 205,105,Color(0,0,0),0,0)
 	end
-    surface.DrawPoly(idpanel);
-    draw.SimpleText(localplayer:Nick(), "TargetID", 160,41,Color(0,0,0),0,0);
-	surface.DrawPoly(ammopanel);
+    surface.DrawPoly(idpanel)
+    draw.SimpleText(localplayer:Nick(), "TargetID", 160,41,Color(0,0,0),0,0)
+	surface.DrawPoly(ammopanel)
 
 	
 
-	surface.SetDrawColor( 230,230,230,200 );
+	surface.SetDrawColor( 230,230,230,200 )
 
 	surface.DrawRect(ScrW()-170,y_id+24,130,16)
 
-	surface.DrawRect(x_info, y_info, 165,16);
+	surface.DrawRect(x_info, y_info, 165,16)
 	if localplayer:Team() == TEAM_GUARD then
-		local s= "Guard";
+		local s= "Guard"
 		if JB.wardenPlayer and JB.wardenPlayer == localplayer then
-			s= "Warden";
+			s= "Warden"
 		end
-		draw.SimpleText(s, "Default", x_info+12, y_info+1,Color(0,0,0));
+		draw.SimpleText(s, "Default", x_info+12, y_info+1,Color(0,0,0))
 	elseif localplayer:Team() == TEAM_PRISONER then
-		local c = "Loading..."; 
+		local c = "Loading..." 
 		if localplayer.character then
-			c = localplayer.character.name.." \""..localplayer.character.nick.."\" "..localplayer.character.surname;
+			c = localplayer.character.name.." \""..localplayer.character.nick.."\" "..localplayer.character.surname
 		end
-		draw.SimpleText(c, "Default", x_info+12, y_info+1,Color(0,0,0));
+		draw.SimpleText(c, "Default", x_info+12, y_info+1,Color(0,0,0))
 	end
 
-	local ammo = "none";
+	local ammo = "none"
 	if LocalPlayer():GetActiveWeapon() and LocalPlayer():GetActiveWeapon().Primary and LocalPlayer():GetActiveWeapon().Primary.ClipSize and LocalPlayer():GetActiveWeapon():Clip1() >= 0 then
-		ammo = LocalPlayer():GetActiveWeapon():Clip1().."/"..LocalPlayer():GetAmmoCount(LocalPlayer():GetActiveWeapon().Ammo);
+		ammo = LocalPlayer():GetActiveWeapon():Clip1().."/"..LocalPlayer():GetAmmoCount(LocalPlayer():GetActiveWeapon().Ammo)
 	end
-	draw.SimpleText(ammo, "Default", ScrW()-50, y_info+1,Color(0,0,0),2);
+	draw.SimpleText(ammo, "Default", ScrW()-50, y_info+1,Color(0,0,0),2)
 
-	draw.SimpleText("Ammo:", "DefaultBold", ScrW()-160, y_info+1,Color(0,0,0));
+	draw.SimpleText("Ammo:", "DefaultBold", ScrW()-160, y_info+1,Color(0,0,0))
 
-	draw.SimpleText(JB:RoundTimeToString(), "TargetID", ScrW()-50, 41,Color(0,0,0),2);
+	draw.SimpleText(JB:RoundTimeToString(), "TargetID", ScrW()-50, 41,Color(0,0,0),2)
 
-	surface.SetDrawColor( 100,100,100, 150 );
+	surface.SetDrawColor( 100,100,100, 150 )
 	
 	
-	render.ClearStencil();
-	render.SetStencilEnable( true );
-	render.SetStencilFailOperation( STENCILOPERATION_KEEP );
-	render.SetStencilZFailOperation( STENCILOPERATION_REPLACE );
-	render.SetStencilPassOperation( STENCILOPERATION_REPLACE );
-	render.SetStencilCompareFunction( STENCILCOMPARISONFUNCTION_ALWAYS );
-	render.SetStencilReferenceValue( 1 );
+	render.ClearStencil()
+	render.SetStencilEnable( true )
+	render.SetStencilFailOperation( STENCILOPERATION_KEEP )
+	render.SetStencilZFailOperation( STENCILOPERATION_REPLACE )
+	render.SetStencilPassOperation( STENCILOPERATION_REPLACE )
+	render.SetStencilCompareFunction( STENCILCOMPARISONFUNCTION_ALWAYS )
+	render.SetStencilReferenceValue( 1 )
 	if displayportrait then
-		surface.SetDrawColor( 0,0,0, 155 );
-		surface.DrawPoly( circle );
+		surface.SetDrawColor( 0,0,0, 155 )
+		surface.DrawPoly( circle )
 	end
-	render.SetStencilCompareFunction( STENCILCOMPARISONFUNCTION_EQUAL );
-	render.SetStencilPassOperation( STENCILOPERATION_REPLACE );
-	cam.Start3D( pos, ang, fov, portraitpos.x-80,portraitpos.y-80 , 150 , 150 );
-		cam.IgnoreZ( true );
-		render.SuppressEngineLighting( true );
-		render.SetLightingOrigin( CharacterPortrait:GetPos() );
-		render.ResetModelLighting( 1,1,1 );
-		render.SetColorModulation( 1,1,1 );
-		render.SetBlend( 1 );
-		render.SetLightingOrigin( CharacterPortrait:GetPos() );
-			CharacterPortrait:DrawModel();
-		render.SuppressEngineLighting( false );
-		cam.IgnoreZ( false );
-	cam.End3D();
-	render.SetStencilEnable( false );
+	render.SetStencilCompareFunction( STENCILCOMPARISONFUNCTION_EQUAL )
+	render.SetStencilPassOperation( STENCILOPERATION_REPLACE )
+	cam.Start3D( pos, ang, fov, portraitpos.x-80,portraitpos.y-80 , 150 , 150 )
+		cam.IgnoreZ( true )
+		render.SuppressEngineLighting( true )
+		render.SetLightingOrigin( CharacterPortrait:GetPos() )
+		render.ResetModelLighting( 1,1,1 )
+		render.SetColorModulation( 1,1,1 )
+		render.SetBlend( 1 )
+		render.SetLightingOrigin( CharacterPortrait:GetPos() )
+			CharacterPortrait:DrawModel()
+		render.SuppressEngineLighting( false )
+		cam.IgnoreZ( false )
+	cam.End3D()
+	render.SetStencilEnable( false )
 	
 	if h_old > localplayer:Health() then
-		h_old = h_old-1;
+		h_old = h_old-1
 	elseif h_old < localplayer:Health() then
-		h_old = h_old+1;
+		h_old = h_old+1
 	end
 	
 	local add = 0
 	if h_old < 30 then
-		add = 50*math.sin(CurTime()*4);
+		add = 50*math.sin(CurTime()*4)
 	end
 	
 	surface.SetTexture()	
-	surface.SetDrawColor( 10,10,10,255 );
-	DrawPartialCircle( portraitpos.x, portraitpos.y, 76, 12, 0, 360, 6 );
-	surface.SetDrawColor( h_color.r+add,h_color.g+add,h_color.b+add,h_color.a ); -- health-color translations, yay!
-	DrawPartialCircle( portraitpos.x, portraitpos.y, 74, 10, 0, h_old/100*360, 6 );
+	surface.SetDrawColor( 10,10,10,255 )
+	DrawPartialCircle( portraitpos.x, portraitpos.y, 76, 12, 0, 360, 6 )
+	surface.SetDrawColor( h_color.r+add,h_color.g+add,h_color.b+add,h_color.a ) -- health-color translations, yay!
+	DrawPartialCircle( portraitpos.x, portraitpos.y, 74, 10, 0, h_old/100*360, 6 )
 
 
 	-- Timers.
-	local n = (count_start+count) - CurTime();
+	local n = (count_start+count) - CurTime()
 
 	if n < 0 then return end
 
-	count_g = (n/count)*200;
+	count_g = (n/count)*200
 	count_r = (1-(n/count))*200
 
 	count_cir = (n/count)*360
 
-	surface.SetDrawColor(10,10,10,255);
-	DrawPartialCircle( ScrW()/2-37, ScrH()/2, 60 ,12, 0, 360, 2 );
-	surface.SetDrawColor(count_r,count_g,0,255);
-	DrawPartialCircle( ScrW()/2-37, ScrH()/2, 59 ,11, 0, count_cir, 2 );
+	surface.SetDrawColor(10,10,10,255)
+	DrawPartialCircle( ScrW()/2-37, ScrH()/2, 60 ,12, 0, 360, 2 )
+	surface.SetDrawColor(count_r,count_g,0,255)
+	DrawPartialCircle( ScrW()/2-37, ScrH()/2, 59 ,11, 0, count_cir, 2 )
 
-	surface.SetDrawColor(0,0,0,255);
-	surface.DrawPoly(tri_outline);
-	surface.SetDrawColor(200,200,200,255);
-	surface.DrawPoly(tri);
+	surface.SetDrawColor(0,0,0,255)
+	surface.DrawPoly(tri_outline)
+	surface.SetDrawColor(200,200,200,255)
+	surface.DrawPoly(tri)
 
-	draw.SimpleTextOutlined(math.Round(n), "HUDNumber5", ScrW()/2-37, ScrH()/2,Color(255,255,255),1,1,1,Color(0,0,0));
-	draw.SimpleTextOutlined(count_title, "TargetID", ScrW()/2+25, ScrH()/2,Color(255,255,255),0,1,1,Color(0,0,0));
-end);
+	draw.SimpleTextOutlined(math.Round(n), "HUDNumber5", ScrW()/2-37, ScrH()/2,Color(255,255,255),1,1,1,Color(0,0,0))
+	draw.SimpleTextOutlined(count_title, "TargetID", ScrW()/2+25, ScrH()/2,Color(255,255,255),0,1,1,Color(0,0,0))
+end)

@@ -11,10 +11,10 @@ if CLIENT then
 end
 
 
-SWEP.ViewModel          = "";
-SWEP.WorldModel         = "";
+SWEP.ViewModel          = ""
+SWEP.WorldModel         = ""
 
-SWEP.DrawCrosshair      = true;
+SWEP.DrawCrosshair      = true
 SWEP.ViewModelFlip      = false
 SWEP.Primary.ClipSize       = -1
 SWEP.Primary.DefaultClip    = -1
@@ -29,7 +29,7 @@ SWEP.Secondary.Ammo     = "none"
 SWEP.Secondary.Delay = 0.1
 
 function SWEP:Initialize()
-   self:SetWeaponHoldType("normal");
+   self:SetWeaponHoldType("normal")
 end
 
 local function SetSubPhysMotionEnabled(ent, enable)
@@ -197,7 +197,7 @@ function SWEP:AllowPickup(target)
    local phys = target:GetPhysicsObject()
    local ply = self:GetOwner()
 
-   return (IsValid(phys) and IsValid(ply) and not phys:HasGameFlag(FVPHYSICS_NO_PLAYER_PICKUP));
+   return (IsValid(phys) and IsValid(ply) and not phys:HasGameFlag(FVPHYSICS_NO_PLAYER_PICKUP))
 end
 
 function SWEP:DoAttack(pickup)
@@ -406,19 +406,19 @@ end
 
 if CLIENT then
    function SWEP:DrawHUD()
-      local x=ScrW()/2;
-      local y=ScrH()/2;
+      local x=ScrW()/2
+      local y=ScrH()/2
 
-      surface.SetDrawColor(0,0,0,180);
-      surface.DrawRect(x-15,y-15,3,30);
-      surface.DrawRect(x+13,y-15,3,30);
-      surface.DrawRect(x-15,y-15,30,3);
-      surface.DrawRect(x-15,y+13,30,3);
+      surface.SetDrawColor(0,0,0,180)
+      surface.DrawRect(x-15,y-15,3,30)
+      surface.DrawRect(x+13,y-15,3,30)
+      surface.DrawRect(x-15,y-15,30,3)
+      surface.DrawRect(x-15,y+13,30,3)
 
-      surface.SetDrawColor(255,255,255,230);
-      surface.DrawRect(x-14,y-14,1,28);
-      surface.DrawRect(x+14,y-14,1,28);
-      surface.DrawRect(x-14,y-14,28,1);
-      surface.DrawRect(x-14,y+14,28,1);
+      surface.SetDrawColor(255,255,255,230)
+      surface.DrawRect(x-14,y-14,1,28)
+      surface.DrawRect(x+14,y-14,1,28)
+      surface.DrawRect(x-14,y-14,28,1)
+      surface.DrawRect(x-14,y+14,28,1)
    end
 end

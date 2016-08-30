@@ -9,86 +9,86 @@ local noRemoveOnRound = {
 }
 
 -- "enums"
-ROUND_INITIALIZE = 0;
-ROUND_START = 1;
-ROUND_PLAY = 2;
-ROUND_END = 3;
+ROUND_INITIALIZE = 0
+ROUND_START = 1
+ROUND_PLAY = 2
+ROUND_END = 3
 
-WIN_DRAW = 0;
-WIN_PRISONER = 1;
-WIN_GUARD = 2;
+WIN_DRAW = 0
+WIN_PRISONER = 1
+WIN_GUARD = 2
 
 -- locals
-local roundActive = ROUND_INITIALIZE;
-local roundWinner = "Neither team";
+local roundActive = ROUND_INITIALIZE
+local roundWinner = "Neither team"
 
 --actual things
 function JB:RoundStatus() -- debug thing
-	return roundActive or ROUND_INITIALIZE;
+	return roundActive or ROUND_INITIALIZE
 end
 
 --Who won the round(should only be used when the round is over.)
 function JB:GetWinner()
-	return roundWinner or "WTF BUG?!.";
+	return roundWinner or "WTF BUG?!."
 end
 
 if SERVER then
 	local teamGetPlayers = team.GetPlayers -- why is this here? well. I want to do EVEREYTHING possible to optimise the rounds. Even the really stupid stuff.
 
-	local roundCount = 0;
+	local roundCount = 0
 
 	local function startPlayer(p)
 		if p:Team() == TEAM_GUARD_DEAD then
-			p:SetTeam(TEAM_GUARD);
+			p:SetTeam(TEAM_GUARD)
 		elseif p:Team() == TEAM_PRISONER_DEAD then
-			p:SetTeam(TEAM_PRISONER);
+			p:SetTeam(TEAM_PRISONER)
 		end 
 		
 		if (p:Team() == TEAM_GUARD or p:Team() == TEAM_GUARD_DEAD) and not p:HasAwnseredMic() then
-			umsg.Start("JSHM",p); umsg.End()
+			umsg.Start("JSHM",p) umsg.End()
 		end
 	end
 	function JB:RoundStart()
 
-		roundActive = ROUND_START;
-		activeLR = false;
+		roundActive = ROUND_START
+		activeLR = false
 		
 		for k,v in pairs(team.GetPlayers(TEAM_GUARD))do
-			v:StripWeapons();
-			v:SetHealth(100);
-			v:SetArmor(0);
-			startPlayer(v);
-			v:Spawn();
+			v:StripWeapons()
+			v:SetHealth(100)
+			v:SetArmor(0)
+			startPlayer(v)
+			v:Spawn()
 		end
 		for k,v in pairs(team.GetPlayers(TEAM_PRISONER))do
-			v:StripWeapons();
-			v:SetHealth(100);
-			v:SetArmor(0);
-			startPlayer(v);
-			v:Spawn();
+			v:StripWeapons()
+			v:SetHealth(100)
+			v:SetArmor(0)
+			startPlayer(v)
+			v:Spawn()
 		end
 		for k,v in pairs(team.GetPlayers(TEAM_GUARD_DEAD))do
-			startPlayer(v);
-			v:Spawn();
+			startPlayer(v)
+			v:Spawn()
 		end
 		for k,v in pairs(team.GetPlayers(TEAM_PRISONER_DEAD))do
-			startPlayer(v);
-			v:Spawn();
+			startPlayer(v)
+			v:Spawn()
 		end
 
 		timer.Create("RoundEnd",600,0,function()
-			JB:RoundEnd();
+			JB:RoundEnd()
 		end)
 
 		timer.Create("TimeWarden",10,1,function()
 			local t = {}
 			for k,v in pairs(team.GetPlayers(TEAM_GUARD))do
 				if v:HasMic() then
-					t[#t+1] = v;
+					t[#t+1] = v
 				end
 			end
 			if t and t[1] then
-				JB:SetWarden(table.Random(t));
+				JB:SetWarden(table.Random(t))
 			else
 				JB:ResetWarden()
 			end
@@ -100,42 +100,42 @@ if SERVER then
 
 		JB:ShouldVoteMap()
 
-		roundActive = ROUND_END;
+		roundActive = ROUND_END
 		
 		
 		for k,v in pairs(ents.FindByClass("jb_guardprop_ball"))do
 			if v and v:IsValid() then
-				v:Remove();
+				v:Remove()
 			end
 		end
 
 		if timer.IsTimer("RoundEnd") then
-			timer.Stop("RoundEnd");
-			timer.Remove("RoundEnd");
+			timer.Stop("RoundEnd")
+			timer.Remove("RoundEnd")
 		end
 
 		if timer.IsTimer("TimeWarden") then
-			timer.Stop("TimeWarden");
-			timer.Remove("TimeWarden");
+			timer.Stop("TimeWarden")
+			timer.Remove("TimeWarden")
 		end
 
 		JB:ResetWarden()
 
-		umsg.Start("JBRE"); umsg.Char(win); umsg.End(); --JailBreakRoundEnd
+		umsg.Start("JBRE") umsg.Char(win) umsg.End() --JailBreakRoundEnd
 		
 		if win == WIN_PRISONER then
-			roundWinner = "PRISONERS";
+			roundWinner = "PRISONERS"
 		elseif win == WIN_GUARD then
-			roundWinner = "GUARDS";
+			roundWinner = "GUARDS"
 		else
-			roundWinner = "Neither team";
+			roundWinner = "Neither team"
 		end
 		
 		timer.Simple(1,function()
-			game.CleanUpMap(true,noRemoveOnRound);
+			game.CleanUpMap(true,noRemoveOnRound)
 		end)
 		timer.Simple(3,function()
-			JB:SpawnMapConfig();
+			JB:SpawnMapConfig()
 		end)
 		timer.Simple(4, function()
 			JB:RoundStart()
@@ -145,20 +145,20 @@ if SERVER then
 	end
 
 	function JB:CheckRoundEnd() -- edited this so it supports winning teams <3
-		local numGuard = #team.GetPlayers(TEAM_GUARD);
-		local numPrisoner = #team.GetPlayers(TEAM_PRISONER);
+		local numGuard = #team.GetPlayers(TEAM_GUARD)
+		local numPrisoner = #team.GetPlayers(TEAM_PRISONER)
 	
 		if (numGuard <= 0) and (numPrisoner >= 1) then
-			JB:RoundEnd(WIN_PRISONER);
-			return true;
+			JB:RoundEnd(WIN_PRISONER)
+			return true
 		elseif (numPrisoner <= 0) and (numGuard >= 1) then
-			JB:RoundEnd(WIN_GUARD);
-			return true;
+			JB:RoundEnd(WIN_GUARD)
+			return true
 		elseif  (numPrisoner <= 0) and (numGuard <= 0) then
-			JB:RoundEnd(WIN_DRAW);
-			return true;
+			JB:RoundEnd(WIN_DRAW)
+			return true
 		end	
-		return false;
+		return false
 	end
 elseif CLIENT then
 	surface.CreateFont( "akbar", {
@@ -169,8 +169,8 @@ elseif CLIENT then
 } ) 
 
 
-	local BackgroundTId = surface.GetTextureID("prisonbreak/background_texture"); --Texture ID
-	local GradientTId = surface.GetTextureID("prisonbreak/gradient"); --Texture ID
+	local BackgroundTId = surface.GetTextureID("prisonbreak/background_texture") --Texture ID
+	local GradientTId = surface.GetTextureID("prisonbreak/gradient") --Texture ID
 	local protips = {
 	"protip: Everybody loves Excl.",
 	"protip: Guns kill people.",
@@ -185,21 +185,21 @@ elseif CLIENT then
 	"protip: Do not cry when you die. Dead people don't cry.",
 	"protip: We are better than LifePunch."
 	}
-	local protipActive = protips[1];
+	local protipActive = protips[1]
 
 
 	hook.Add("HUDPaint","JBRoundPaint", function()
 		if JB:RoundStatus() == ROUND_START or JB:RoundStatus() == ROUND_END then
 
-			surface.SetFont("Trebuchet19");
+			surface.SetFont("Trebuchet19")
 		
-			local sWin = "PREPARING";
+			local sWin = "PREPARING"
 			if JB:RoundStatus() == ROUND_END then
-				sWin = roundWinner;
+				sWin = roundWinner
 			end
-			local s=JB.util.FormatLine(protipActive or protips[1], "Trebuchet19", 280);
-			local w,h=surface.GetTextSize(s);
-			local rh=180+h+8;
+			local s=JB.util.FormatLine(protipActive or protips[1], "Trebuchet19", 280)
+			local w,h=surface.GetTextSize(s)
+			local rh=180+h+8
 
 			
 			draw.RoundedBox( 6, (ScrW()/2)-152, ScrH()-352, 304, rh+4, Color( 0, 0, 0, 255 ) )
@@ -222,59 +222,59 @@ elseif CLIENT then
 			draw.SimpleText(team.GetScore(TEAM_GUARD), "HugeFont", ((ScrW()/2)-150)+10+((300/2)-8)+((300/2)-8)/2, (ScrH()-350)+55, Color(250,250,250,255), TEXT_ALIGN_CENTER, 0)
 			
 		end
-	end);
+	end)
 
-	roundtimeLen = 600; 
-	roundtimeStart = CurTime();
+	roundtimeLen = 600 
+	roundtimeStart = CurTime()
 
 	usermessage.Hook("JBRE", function(u)
-		local win = u:ReadChar();
+		local win = u:ReadChar()
 		
 		if win == WIN_PRISONER then
-			roundWinner = "PRISONERS";
+			roundWinner = "PRISONERS"
 		elseif win == WIN_GUARD then
-			roundWinner = "GUARDS";
+			roundWinner = "GUARDS"
 		else
-			roundWinner = "DRAW";
+			roundWinner = "DRAW"
 		end
 		
-		roundActive = ROUND_END;
+		roundActive = ROUND_END
 		
-		protipActive = protips[math.random(1,#protips)];
+		protipActive = protips[math.random(1,#protips)]
 
 		JB:KillObjective()
 		
-		game.CleanUpMap();
+		game.CleanUpMap()
 		
-		surface.PlaySound("vo/k_lab/kl_initializing02.wav");
+		surface.PlaySound("vo/k_lab/kl_initializing02.wav")
 		
 
-		endRoundHud = true;
+		endRoundHud = true
 		timer.Simple(4,function()
-			roundActive = ROUND_START;
-			roundtimeStart = CurTime();
-			endRoundHud = false;
+			roundActive = ROUND_START
+			roundtimeStart = CurTime()
+			endRoundHud = false
 			timer.Simple(1,function()
-				roundActive = ROUND_PLAYING;
-			end);
-		end);
-	end);
+				roundActive = ROUND_PLAYING
+			end)
+		end)
+	end)
 
 
 	function JB:GetRoundTime()
-		return math.Round(roundtimeLen-(CurTime()-roundtimeStart));
+		return math.Round(roundtimeLen-(CurTime()-roundtimeStart))
 	end
 
 	function JB:RoundTimeToString()
-		local t= JB:GetRoundTime();
+		local t= JB:GetRoundTime()
 
-		local m= tostring(math.floor(t/60));
-		local s= tostring(t-(m*60));
+		local m= tostring(math.floor(t/60))
+		local s= tostring(t-(m*60))
 		if tonumber(s) < 10 then
-			s= "0"..s;
+			s= "0"..s
 		end
 		
-		return m..":"..s;
+		return m..":"..s
 	end
 
 end

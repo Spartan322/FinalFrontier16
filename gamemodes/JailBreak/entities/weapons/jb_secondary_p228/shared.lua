@@ -1,39 +1,39 @@
 
 
 if ( SERVER ) then
-	AddCSLuaFile( "shared.lua" );
+	AddCSLuaFile( "shared.lua" )
 end
 
 if ( CLIENT ) then
-	SWEP.PrintName			= "P228";
-	SWEP.Slot				= 1;
-	SWEP.SlotPos			= 0;
+	SWEP.PrintName			= "P228"
+	SWEP.Slot				= 1
+	SWEP.SlotPos			= 0
 end
 
-SWEP.Base				= "jb_base";
-SWEP.Spawnable			= true;
-SWEP.AdminSpawnable		= true;
+SWEP.Base				= "jb_base"
+SWEP.Spawnable			= true
+SWEP.AdminSpawnable		= true
 
-SWEP.HoldType = "pistol";
-SWEP.ViewModel = "models/weapons/v_pist_p228.mdl";
-SWEP.WorldModel = "models/weapons/w_pist_p228.mdl";
+SWEP.HoldType = "pistol"
+SWEP.ViewModel = "models/weapons/v_pist_p228.mdl"
+SWEP.WorldModel = "models/weapons/w_pist_p228.mdl"
 
-SWEP.Primary.Automatic		= false;
+SWEP.Primary.Automatic		= false
 
-SWEP.Sound			= Sound( "Weapon_P228.Single" );
-SWEP.Recoil			= 1.5;
-SWEP.Damage			= 15;
-SWEP.NumShots		= 1;
-SWEP.Cone			= 0.03;
-SWEP.IronCone		= 0.008;
-SWEP.MaxCone		= 0.04;
-SWEP.ShootConeAdd	= 0.007;
-SWEP.CrouchConeMul 	= 0.9;
-SWEP.Primary.ClipSize		= 12;
-SWEP.Delay			= 0.22;
-SWEP.DefaultClip	= 12;
-SWEP.Ammo			= "pistol";
-SWEP.ReloadSequenceTime = 1.85;
+SWEP.Sound			= Sound( "Weapon_P228.Single" )
+SWEP.Recoil			= 1.5
+SWEP.Damage			= 15
+SWEP.NumShots		= 1
+SWEP.Cone			= 0.03
+SWEP.IronCone		= 0.008
+SWEP.MaxCone		= 0.04
+SWEP.ShootConeAdd	= 0.007
+SWEP.CrouchConeMul 	= 0.9
+SWEP.Primary.ClipSize		= 12
+SWEP.Delay			= 0.22
+SWEP.DefaultClip	= 12
+SWEP.Ammo			= "pistol"
+SWEP.ReloadSequenceTime = 1.85
 
 SWEP.OriginsPos = Vector (2.4779, -2.906, 1.9127)
 SWEP.OriginsAng = Vector (0.6539, -0.6274, 0.9477)

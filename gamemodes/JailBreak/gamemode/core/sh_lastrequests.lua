@@ -2,37 +2,37 @@
 -- last request system
 
 local meta = {}
-activeLR = false;
+activeLR = false
 function JB:LastRequest()
-	local obj = {};
+	local obj = {}
        
-    setmetatable( obj, meta );
-   	meta.__index =  meta;
+    setmetatable( obj, meta )
+   	meta.__index =  meta
 
-   	obj.prisoner = NULL;
-   	obj.guard = NULL;
+   	obj.prisoner = NULL
+   	obj.guard = NULL
 
-   	obj.id = math.random(0,999);
+   	obj.id = math.random(0,999)
 
-   	obj.Name = "Undefined";
-   	obj.OnStart = false;
-   	obj.OnPrisonerDamaged = false;
-   	obj.OnGuardDamaged = false;
-   	obj.OnPrisonerDied = false;
-   	obj.OnGuardDied = false;
-   	obj.OnComplete = false;
+   	obj.Name = "Undefined"
+   	obj.OnStart = false
+   	obj.OnPrisonerDamaged = false
+   	obj.OnGuardDamaged = false
+   	obj.OnPrisonerDied = false
+   	obj.OnGuardDied = false
+   	obj.OnComplete = false
 
-   	obj.Time = 240;
-   	obj.Start = 0;
+   	obj.Time = 240
+   	obj.Start = 0
 
-   	return obj;
+   	return obj
 end
 
 function meta:AddPlayers(p,g)
 	if not IsValid(p) or not IsValid(g) then return end
 
-	self.prisoner = p;
-	self.guard = g;
+	self.prisoner = p
+	self.guard = g
 end
 
 function meta.__call(self)
@@ -40,68 +40,68 @@ function meta.__call(self)
 
 	JB:DebugPrint("LR Started")
 
-	self.Start = CurTime(); 
+	self.Start = CurTime() 
 
-	umsg.Start("JNC",self.guard);
-	umsg.String("You have been chosen to play a "..self.Name.." against "..self.prisoner:Nick());
-	umsg.String("boom");
-	umsg.End();
-	umsg.Start("JNC",self.prisoner);
-	umsg.String("You have chosen to play a "..self.Name.." against "..self.prisoner:Nick());
-	umsg.String("boom");
-	umsg.End();
+	umsg.Start("JNC",self.guard)
+	umsg.String("You have been chosen to play a "..self.Name.." against "..self.prisoner:Nick())
+	umsg.String("boom")
+	umsg.End()
+	umsg.Start("JNC",self.prisoner)
+	umsg.String("You have chosen to play a "..self.Name.." against "..self.prisoner:Nick())
+	umsg.String("boom")
+	umsg.End()
 
 	timer.Simple(self.Time,function(self)
 		if not self then return end
 
-		self:End();
-		self.prisoner:Kill();
+		self:End()
+		self.prisoner:Kill()
 	end,self)
-	self.prisoner:SetHealth(100);
-	self.guard:SetHealth(100);
+	self.prisoner:SetHealth(100)
+	self.guard:SetHealth(100)
 	local efunc = function() end
-	self.OnGuardDied = self.OnGuardDied or efunc;
-	self.OnPrisonerDied = self.OnPrisonerDied or efunc;
-	self.OnGuardDamaged = self.OnGuardDamaged or efunc;
-	self.OnPrisonerDamaged = self.OnPrisonerDamaged or efunc;
+	self.OnGuardDied = self.OnGuardDied or efunc
+	self.OnPrisonerDied = self.OnPrisonerDied or efunc
+	self.OnGuardDamaged = self.OnGuardDamaged or efunc
+	self.OnPrisonerDamaged = self.OnPrisonerDamaged or efunc
 
-	activeLR = self;
+	activeLR = self
 
-	self.OnStart(self.prisoner,self.guard);
+	self.OnStart(self.prisoner,self.guard)
 end
 function meta:LoadTemplate(t)
-	self.Name = t.name;
+	self.Name = t.name
 
 	if not t.lrhooks or type(t.lrhooks) ~= "table"  then return end
 	for k,v in pairs(t.lrhooks)do
-		self[k] = v;
+		self[k] = v
 	end
 end
 function meta:TimeLeft()
-	return self.Time-(CurTime()-self.Start);
+	return self.Time-(CurTime()-self.Start)
 end
 
 function meta:End()
 	if activeLR and activeLR.id == self.id then
 		if self.OnComplete then
-			self.OnComplete();
+			self.OnComplete()
 		end
-		activeLR = nil; -- flush
+		activeLR = nil -- flush
 	end
 
-	self = nil;
+	self = nil
 end
 
 hook.Add( "PlayerDeath", "JBPlayerDeathLR", function(p,i,k)
 	if p:IsPlayer() and k and k:IsPlayer() and activeLR and (activeLR.prisoner == k or activeLR.guard == k) and (activeLR.guard == p or activeLR.prisoner == p) then
 		if activeLR.prisoner == p then
-			activeLR.OnPrisonerDied(k);
+			activeLR.OnPrisonerDied(k)
 		elseif activeLR.guard == p then
-			activeLR.OnGuardDied(k);
+			activeLR.OnGuardDied(k)
 		end
 
 		if activeLR and activeLR.End then
-		activeLR:End();
+		activeLR:End()
 		end
 	end
 end)
@@ -109,12 +109,12 @@ hook.Add( "EntityTakeDamage", "JBPlayerDeathLR", function(p,i,k,a,info)
 	if activeLR and activeLR.Name then
 
 		if p:IsPlayer() and k and k:IsPlayer() and activeLR and ( (activeLR.prisoner == p and activeLR.guard ~= k) or (activeLR.guard == p or activeLR.prisoner ~= k) ) then
-			info:ScaleDamage(0);
+			info:ScaleDamage(0)
 		elseif p:IsPlayer() and k and k:IsPlayer() and activeLR and (activeLR.prisoner == k or activeLR.guard == k) and (activeLR.guard == p or activeLR.prisoner == p) then
 			if activeLR.prisoner == p then
-				activeLR.OnPrisonerDamaged(k,a);
+				activeLR.OnPrisonerDamaged(k,a)
 			elseif activeLR.guard == p then
-				activeLR.OnGuardDamaged(k,a);
+				activeLR.OnGuardDamaged(k,a)
 			end
 		end
 

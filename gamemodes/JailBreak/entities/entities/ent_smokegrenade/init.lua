@@ -62,9 +62,9 @@ function ENT:Think()
 
 -- OLD SMOKE EFFECT IN THE VERSION 3.0 ONLY
 /*---------------------------------------------------------
-		local smoke = EffectData();
-			smoke:SetOrigin(self.Entity:GetPos());
-			util.Effect("effect_smokegrenade", smoke);
+		local smoke = EffectData()
+			smoke:SetOrigin(self.Entity:GetPos())
+			util.Effect("effect_smokegrenade", smoke)
 ---------------------------------------------------------*/
 
 -- OLD SMOKE EFFECT IN THE VERSION 1.0 AND 2.0 AND 3.0

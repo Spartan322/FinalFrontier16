@@ -1,36 +1,36 @@
 
 if ( SERVER ) then
-	AddCSLuaFile( "shared.lua" );
+	AddCSLuaFile( "shared.lua" )
 end
 
 if ( CLIENT ) then
-	SWEP.PrintName			= "MP5";
-	SWEP.Slot				= 0;
-	SWEP.SlotPos			= 0;
+	SWEP.PrintName			= "MP5"
+	SWEP.Slot				= 0
+	SWEP.SlotPos			= 0
 end
 
-SWEP.Base				= "jb_base";
-SWEP.Spawnable			= true;
-SWEP.AdminSpawnable		= true;
+SWEP.Base				= "jb_base"
+SWEP.Spawnable			= true
+SWEP.AdminSpawnable		= true
 
 SWEP.HoldType = "smg"
-SWEP.ViewModel = "models/weapons/v_smg_mp5.mdl";
-SWEP.WorldModel = "models/weapons/w_smg_mp5.mdl";
+SWEP.ViewModel = "models/weapons/v_smg_mp5.mdl"
+SWEP.WorldModel = "models/weapons/w_smg_mp5.mdl"
 
-SWEP.Sound			= Sound( "Weapon_MP5Navy.Single" );
-SWEP.Recoil			= 0.8;
-SWEP.Damage			= 18;
-SWEP.NumShots		= 1;
-SWEP.Cone			= 0.05;
-SWEP.IronCone		= 0.015;
-SWEP.MaxCone		= 0.09;
-SWEP.ShootConeAdd	= 0.005;
-SWEP.CrouchConeMul 	= 0.7;
-SWEP.Primary.ClipSize		= 32;
-SWEP.Delay			= 0.125;
-SWEP.DefaultClip	= 32;
-SWEP.Ammo			= "SMG1";
-SWEP.ReloadSequenceTime = 1.85;
+SWEP.Sound			= Sound( "Weapon_MP5Navy.Single" )
+SWEP.Recoil			= 0.8
+SWEP.Damage			= 18
+SWEP.NumShots		= 1
+SWEP.Cone			= 0.05
+SWEP.IronCone		= 0.015
+SWEP.MaxCone		= 0.09
+SWEP.ShootConeAdd	= 0.005
+SWEP.CrouchConeMul 	= 0.7
+SWEP.Primary.ClipSize		= 32
+SWEP.Delay			= 0.125
+SWEP.DefaultClip	= 32
+SWEP.Ammo			= "SMG1"
+SWEP.ReloadSequenceTime = 1.85
 
 SWEP.OriginsPos = Vector (2.8575, -2.6834, 1.9967)
 SWEP.OriginsAng = Vector (0, 0, 0)

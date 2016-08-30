@@ -2,9 +2,9 @@
 -- entity metafunctions.
 
 Player.Weapon:IsPrimary()
-	return (string.Left(self:GetClass(), 10) == "jb_primary");
+	return (string.Left(self:GetClass(), 10) == "jb_primary")
 end
 
 Player.Weapon:IsSecondary()
-	return (string.Left(self:GetClass(), 12) == "jb_secondary");
+	return (string.Left(self:GetClass(), 12) == "jb_secondary")
 end

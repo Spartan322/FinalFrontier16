@@ -1,74 +1,74 @@
 
 if (SERVER) then
 
-	AddCSLuaFile( "shared.lua" );
-	SWEP.Weight				= 5;
-	SWEP.AutoSwitchTo		= false;
-	SWEP.AutoSwitchFrom		= false;
+	AddCSLuaFile( "shared.lua" )
+	SWEP.Weight				= 5
+	SWEP.AutoSwitchTo		= false
+	SWEP.AutoSwitchFrom		= false
 end
 
 if ( CLIENT ) then
 
-	SWEP.DrawAmmo			= true;
-	SWEP.DrawCrosshair		= false;
-	SWEP.ViewModelFOV		= 70;
-	SWEP.ViewModelFlip		= true;
-	SWEP.CSMuzzleFlashes	= true;
-	SWEP.DrawWeaponInfoBox  = true;
+	SWEP.DrawAmmo			= true
+	SWEP.DrawCrosshair		= false
+	SWEP.ViewModelFOV		= 70
+	SWEP.ViewModelFlip		= true
+	SWEP.CSMuzzleFlashes	= true
+	SWEP.DrawWeaponInfoBox  = true
 	
-	SWEP.Slot				= 0;
-	SWEP.SlotPos			= 1;
+	SWEP.Slot				= 0
+	SWEP.SlotPos			= 1
 end
 
 SWEP.Primary.Automatic		= true
 
-SWEP.Author			= "_NewBee";
-SWEP.Contact		= "";
-SWEP.Purpose		= "";
-SWEP.Instructions	= "";
+SWEP.Author			= "_NewBee"
+SWEP.Contact		= ""
+SWEP.Purpose		= ""
+SWEP.Instructions	= ""
 SWEP.Spawnable			= false
 SWEP.AdminSpawnable		= false
-SWEP.Category		= "_NewBee";
+SWEP.Category		= "_NewBee"
 
-SWEP.Sound			= Sound( "Weapon_AK47.Single" );
-SWEP.Recoil			= 1.5;
-SWEP.Damage			= 40;
-SWEP.NumShots		= 1;
-SWEP.Cone			= 0.02;
-SWEP.IronCone		= 0.01;
-SWEP.MaxCone		= 0.5;
-SWEP.ShootConeAdd	= 0.005;
-SWEP.CrouchConeMul 	= 0.6;
-SWEP.Delay			= 0.15;
+SWEP.Sound			= Sound( "Weapon_AK47.Single" )
+SWEP.Recoil			= 1.5
+SWEP.Damage			= 40
+SWEP.NumShots		= 1
+SWEP.Cone			= 0.02
+SWEP.IronCone		= 0.01
+SWEP.MaxCone		= 0.5
+SWEP.ShootConeAdd	= 0.005
+SWEP.CrouchConeMul 	= 0.6
+SWEP.Delay			= 0.15
 
-SWEP.IronCycleSpeed = 20;
+SWEP.IronCycleSpeed = 20
 
-SWEP.Primary.ClipSize		= 5;
-SWEP.DefaultClip	= 0;
-SWEP.Ammo			= "none";
+SWEP.Primary.ClipSize		= 5
+SWEP.DefaultClip	= 0
+SWEP.Ammo			= "none"
 
-SWEP.Secondary.ClipSize		= -1;
-SWEP.Secondary.DefaultClip	= -1;
-SWEP.Secondary.Automatic	= false;
-SWEP.Secondary.Ammo			= "none";
+SWEP.Secondary.ClipSize		= -1
+SWEP.Secondary.DefaultClip	= -1
+SWEP.Secondary.Automatic	= false
+SWEP.Secondary.Ammo			= "none"
 
-SWEP.RunPos = Vector(0,0,0);
-SWEP.RunAng = Angle(0,0,0);
+SWEP.RunPos = Vector(0,0,0)
+SWEP.RunAng = Angle(0,0,0)
 
-SWEP.AimPos = Vector(0,0,0);
-SWEP.AimAng = Angle(0,0,0);
+SWEP.AimPos = Vector(0,0,0)
+SWEP.AimAng = Angle(0,0,0)
 
-SWEP.OriginsPos = Vector(0,0,0);
-SWEP.OriginsAng = Angle(0,0,0);
+SWEP.OriginsPos = Vector(0,0,0)
+SWEP.OriginsAng = Angle(0,0,0)
 
 function SWEP:SetupDataTables( )
-	self:DTVar( "Int", 0, "Mode" );
-	self:DTVar( "Float", 0, "LastShoot" );
+	self:DTVar( "Int", 0, "Mode" )
+	self:DTVar( "Float", 0, "LastShoot" )
 end
 
 function SWEP:Initialize()
-	self:SetWeaponHoldType(self.HoldType);
-	self.Weapon:SetDTInt(0, 0);
+	self:SetWeaponHoldType(self.HoldType)
+	self.Weapon:SetDTInt(0, 0)
 
 	if CLIENT then
 		JB:CheckWeaponTable(self.Weapon:GetClass(),self.WorldModel)
@@ -76,72 +76,72 @@ function SWEP:Initialize()
 end
 
 function SWEP:Deploy()
-	self.Weapon:SendWeaponAnim(ACT_VM_DRAW);
-	self.Weapon:SetNextPrimaryFire(CurTime() + 1);
+	self.Weapon:SendWeaponAnim(ACT_VM_DRAW)
+	self.Weapon:SetNextPrimaryFire(CurTime() + 1)
 	
 	if self.OldAmmo then
-		self:SetClip1(self.OldAmmo);
+		self:SetClip1(self.OldAmmo)
 	end
 	
 	timer.Destroy(self.Owner:SteamID().."ReloadTimer")
 	
-	return true;
+	return true
 end
 
 function SWEP:Holster()
-	self.OldAmmo = self:Clip1();
-	self:SetClip1(1);
+	self.OldAmmo = self:Clip1()
+	self:SetClip1(1)
 	
-	self.Weapon:SetDTInt(0, 0);
+	self.Weapon:SetDTInt(0, 0)
 	
 	timer.Destroy(self.Owner:SteamID().."ReloadTimer")
 	
-	return true;
+	return true
 end
 
-SWEP.NextReload = CurTime();
+SWEP.NextReload = CurTime()
 function SWEP:Reload()	
 	if self.NextReload > CurTime() or CLIENT or self.Owner:GetAmmoCount(self.Ammo) <= 0 then return end
 	
-	self.NextReload = CurTime()+4;
+	self.NextReload = CurTime()+4
 	
-	self.Weapon:SendWeaponAnim(ACT_VM_RELOAD);
-	self.Owner:SetAnimation(PLAYER_RELOAD);
+	self.Weapon:SendWeaponAnim(ACT_VM_RELOAD)
+	self.Owner:SetAnimation(PLAYER_RELOAD)
 	
-	local clip = self:Clip1();
-	local dur;
+	local clip = self:Clip1()
+	local dur
 	if clip > 0 then
-		self.Rechamber = false;
-		self:SetClip1(1);
+		self.Rechamber = false
+		self:SetClip1(1)
 		
-		dur = self.Owner:GetViewModel():SequenceDuration();
+		dur = self.Owner:GetViewModel():SequenceDuration()
 	else
-		self.Rechamber = true;
+		self.Rechamber = true
 		
-		dur = self.ReloadSequenceTime or self.Owner:GetViewModel():SequenceDuration();
+		dur = self.ReloadSequenceTime or self.Owner:GetViewModel():SequenceDuration()
 	end
 
-	self.Owner:GiveAmmo(-self.Primary.ClipSize,self.Ammo);
+	self.Owner:GiveAmmo(-self.Primary.ClipSize,self.Ammo)
 				
-	self:SetNextPrimaryFire(CurTime()+dur);
+	self:SetNextPrimaryFire(CurTime()+dur)
 	timer.Create(self.Owner:SteamID().."ReloadTimer", dur,1,function(self)
 		if not self.Owner or not IsValid(self.Owner )) or not self.Owner.GetAmmoCount then return end
-		local clip = self:Clip1();
-		local a;
+		local clip = self:Clip1()
+		local a
 		if self.Owner:GetAmmoCount(self.Ammo) < self.Primary.ClipSize then
-			a = self.Owner:GetAmmoCount(self.Ammo);
+			a = self.Owner:GetAmmoCount(self.Ammo)
 		else
-			a = self.Primary.ClipSize;
+			a = self.Primary.ClipSize
 		end
 	
 		self.Owner:RemoveAmmo(a, self.Ammo)
 		
 		if not self.Rechamber then
-			self:SetClip1(a+1);
+			self:SetClip1(a+1)
 		else
-			self:SetClip1(a);
-			self.Weapon:SendWeaponAnim(ACT_VM_DRAW);
-			self:SetNextPrimaryFire(CurTime()+1);
+			self:SetClip1(a)
+			self.Weapon:SendWeaponAnim(ACT_VM_DRAW)
+			self:SetNextPrimaryFire(CurTime()+1)
 			
 		end	
 	end,self)
@@ -149,39 +149,39 @@ function SWEP:Reload()
 	self.Weapon:SetDTInt(0, 0)
 end
 
-SWEP.AddCone = 0;
-SWEP.LastShoot = CurTime();
+SWEP.AddCone = 0
+SWEP.LastShoot = CurTime()
 function SWEP:Think()	
-	if not SERVER then return end;
+	if not SERVER then return end
 	
-	local mul = 1;
+	local mul = 1
 	if self.Owner:Crouching() then
-		mul = self.CrouchConeMul;
+		mul = self.CrouchConeMul
 	end
 	
 	if self.LastShoot+0.2 < CurTime() then 
-		self.AddCone = self.AddCone-(self.ShootConeAdd/5);
+		self.AddCone = self.AddCone-(self.ShootConeAdd/5)
 		if self.AddCone < 0 then
-			self.AddCone=0;
+			self.AddCone=0
 		end
 	end
 	
 	if self:GetDTInt(0) == 1 then
-		self.Weapon:SetDTFloat(1, math.Clamp((self.IronCone+self.AddCone)*mul, 0.002, 0.12));
+		self.Weapon:SetDTFloat(1, math.Clamp((self.IronCone+self.AddCone)*mul, 0.002, 0.12))
 	elseif self:GetDTInt(0) == 2 then
-		self.Weapon:SetDTFloat(1, math.Clamp((self.Cone+self.AddCone+0.5)*mul, 0.002, 0.12));
+		self.Weapon:SetDTFloat(1, math.Clamp((self.Cone+self.AddCone+0.5)*mul, 0.002, 0.12))
 	else
-		self.Weapon:SetDTFloat(1, math.Clamp((self.Cone+self.AddCone)*mul, 0.002, 0.12));
+		self.Weapon:SetDTFloat(1, math.Clamp((self.Cone+self.AddCone)*mul, 0.002, 0.12))
 	end
 	
 	if not self.Owner.FOVRate then self.Owner.FOVRate = 90 end
 		
-	local dt = self:GetDTInt(0);
+	local dt = self:GetDTInt(0)
 		
 	if dt == 1 then
-		self.Owner.FOVRate = math.Approach(  self.Owner.FOVRate,  90-10,  3);
+		self.Owner.FOVRate = math.Approach(  self.Owner.FOVRate,  90-10,  3)
 	else
-		self.Owner.FOVRate = math.Approach(  self.Owner.FOVRate,  90,  3);
+		self.Owner.FOVRate = math.Approach(  self.Owner.FOVRate,  90,  3)
 	end
 	self.Owner:SetFOV(self.Owner.FOVRate)
 
@@ -191,27 +191,27 @@ function SWEP:Think()
 			self.Owner:SetFOV(0, 0.5)
 			self.Owner:DrawViewModel(true)
 		end
-		return;
+		return
 	elseif self:GetDTInt(0) > 1 then
-		self:SetDTInt(0,0);
-		return;
+		self:SetDTInt(0,0)
+		return
 	end
 end
 
 function SWEP:PrimaryAttack()
 
-	local ct = CurTime();
+	local ct = CurTime()
 
 	if self:GetDTInt(0) > 1 then
-		self:SetNextPrimaryFire(ct+self.Delay);
-		return;
+		self:SetNextPrimaryFire(ct+self.Delay)
+		return
 	elseif self:Clip1() <= 0 then
-		self:SetNextPrimaryFire(ct+self.Delay);
+		self:SetNextPrimaryFire(ct+self.Delay)
 		self:EmitSound( "Weapon_Pistol.Empty" )
-		return;
+		return
 	end
 	
-	self:SetNextPrimaryFire(ct+self.Delay);
+	self:SetNextPrimaryFire(ct+self.Delay)
 	
 	if self.Weapon:GetDTInt(0) ~= 1 then
 		self:CSShootBullet( self.Damage, self.Recoil * 1.5, self.NumShots, self.Weapon:GetDTFloat(1))
@@ -220,77 +220,77 @@ function SWEP:PrimaryAttack()
 	end
 	
 	self.AddCone = math.Clamp(self.AddCone+self.ShootConeAdd,0,self.MaxCone)
-	self.LastShoot = ct;
+	self.LastShoot = ct
 	
 	if SERVER then
 		self.Owner:EmitSound(self.Sound, 100, math.random(95, 105))
 	end
 
-	self:TakePrimaryAmmo(1);
+	self:TakePrimaryAmmo(1)
 end
 
 function SWEP:CSShootBullet( dmg, recoil, numbul, cone )
-	numbul 	= numbul 	or 1;
-	cone 	= cone 		or 0.01;
+	numbul 	= numbul 	or 1
+	cone 	= cone 		or 0.01
 		
 	local bullet = {}
-	bullet.Num 		= numbul;
-	bullet.Src 		= self.Owner:GetShootPos();
-	bullet.Dir 		= ( self.Owner:EyeAngles() + self.Owner:GetPunchAngle() ):Forward();
-	bullet.Spread 	= Vector( cone, cone, 0 );
-	bullet.Tracer	= 4;
-	bullet.Force	= self.Damage;
-	bullet.Damage	= self.Damage;
+	bullet.Num 		= numbul
+	bullet.Src 		= self.Owner:GetShootPos()
+	bullet.Dir 		= ( self.Owner:EyeAngles() + self.Owner:GetPunchAngle() ):Forward()
+	bullet.Spread 	= Vector( cone, cone, 0 )
+	bullet.Tracer	= 4
+	bullet.Force	= self.Damage
+	bullet.Damage	= self.Damage
 	
 	bullet.Callback = function(attacker, trace, dmginfo)	-- penetration tyay	
 		self.Owner:LagCompensation(false)
 		
-		local penetrationForce;
-		local hitMat = trace.MatType ;
+		local penetrationForce
+		local hitMat = trace.MatType 
 		
 		if hitMat == MAT_PLASTIC then
-			penetrationForce = 1.25;
+			penetrationForce = 1.25
 		elseif hitMat == MAT_WOOD then
-			penetrationForce = 1;
+			penetrationForce = 1
 		elseif hitMat == MAT_TILE then
-			penetrationForce = 0.75;
+			penetrationForce = 0.75
 		elseif hitMat == MAT_CONCRETE then
-			penetrationForce = 0.5;
+			penetrationForce = 0.5
 		elseif hitMat == MAT_METAL or hitMat == MAT_VENT then
-			penetrationForce = 0.5;
+			penetrationForce = 0.5
 		else
-			penetrationForce = 1;
+			penetrationForce = 1
 		end
 		
-		local forward = bullet.Dir:Normalize();
-		local tr = {};
-		tr.start = trace.HitPos + (forward * 10) * penetrationForce;
-		tr.endpos = tr.start + (forward * 10) * penetrationForce;
-		tr.filter = self;
+		local forward = bullet.Dir:Normalize()
+		local tr = {}
+		tr.start = trace.HitPos + (forward * 10) * penetrationForce
+		tr.endpos = tr.start + (forward * 10) * penetrationForce
+		tr.filter = self
 		
-		local trace2 = util.TraceLine(tr);
+		local trace2 = util.TraceLine(tr)
 		
 		if not trace2.HitWorld and trace.Entity ~= trace2.Entity then
-			local bullet2 = {};
-			bullet2.Num = bullet.Num;
-			bullet2.Src = trace.HitPos + forward * 8 * penetrationForce;
-			bullet2.Dir = bullet.Dir;
-			bullet2.Spread = Vector(0, 0, 0);
-			bullet2.Tracer = bullet.Tracer;
-			bullet2.Force = bullet.Force * 0.9;
-			bullet2.Damage = bullet.Damage * 0.9;
+			local bullet2 = {}
+			bullet2.Num = bullet.Num
+			bullet2.Src = trace.HitPos + forward * 8 * penetrationForce
+			bullet2.Dir = bullet.Dir
+			bullet2.Spread = Vector(0, 0, 0)
+			bullet2.Tracer = bullet.Tracer
+			bullet2.Force = bullet.Force * 0.9
+			bullet2.Damage = bullet.Damage * 0.9
 			
-			self.Owner:FireBullets(bullet2);
+			self.Owner:FireBullets(bullet2)
 		end
 		
 	end
 	
-	self.Owner:FireBullets(bullet);
+	self.Owner:FireBullets(bullet)
 	--if self:GetDTInt(0,0) != 1 then
-		self.Weapon:SendWeaponAnim(ACT_VM_PRIMARYATTACK);
+		self.Weapon:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
 	--end
-	self.Owner:SetAnimation(PLAYER_ATTACK1);
-	self.Owner:MuzzleFlash();
+	self.Owner:SetAnimation(PLAYER_ATTACK1)
+	self.Owner:MuzzleFlash()
 	
 	
 	if ( (SinglePlayer() and SERVER) or (not SinglePlayer() and CLIENT and IsFirstTimePredicted() ) ) then
@@ -303,23 +303,23 @@ function SWEP:CSShootBullet( dmg, recoil, numbul, cone )
 	end
 end
 
-local CurMove = -2;
-local AmntToMove = 0.4;
-local MoveCycle = 0;
-local Ironsights_Time = 0.1;
-local CurShakeA = 0.03;
-local CurShakeB = 0.03;
-local randomdir = 0;
-local randomdir2 = 0;
-local timetorandom = 0;
-local BlendPos = Vector(0, 0, 0);
-local BlendAng = Vector(0, 0, 0);
-local ApproachRate = 0.2;
-local RollModSprint = 0;
+local CurMove = -2
+local AmntToMove = 0.4
+local MoveCycle = 0
+local Ironsights_Time = 0.1
+local CurShakeA = 0.03
+local CurShakeB = 0.03
+local randomdir = 0
+local randomdir2 = 0
+local timetorandom = 0
+local BlendPos = Vector(0, 0, 0)
+local BlendAng = Vector(0, 0, 0)
+local ApproachRate = 0.2
+local RollModSprint = 0
 
 function SWEP:GetViewModelPosition(pos, ang)
-	local t = FrameTime();
-	local dt = self.Weapon:GetDTInt(0);
+	local t = FrameTime()
+	local dt = self.Weapon:GetDTInt(0)
 	if dt == 2 then
 		TargetPos = self.RunPos
 		TargetAng = self.RunAng
@@ -394,39 +394,39 @@ if CLIENT then
 	function SWEP:FireAnimationEvent(pos, ang, ev)
 		if ev == 5001 then
 			if not self.Owner:ShouldDrawLocalPlayer() then
-				local vm = self.Owner:GetViewModel();
-				local muz = vm:GetAttachment("1");
+				local vm = self.Owner:GetViewModel()
+				local muz = vm:GetAttachment("1")
 				
 				if not self.Weapon.Em then
-					self.Weapon.Em = ParticleEmitter(muz.Pos);
+					self.Weapon.Em = ParticleEmitter(muz.Pos)
 				end
 				
-				local par = self.Weapon.Em:Add("sprites/frostbreath", muz.Pos);
-				par:SetStartSize(math.random(0.5, 1));
-				par:SetStartAlpha(120);
-				par:SetEndAlpha(0);
-				par:SetEndSize(math.random(5, 5.5));
-				par:SetDieTime(1.5 + math.Rand(-0.3, 0.3));
-				par:SetRoll(math.Rand(0.2, 1));
-				par:SetRollDelta(0.8 + math.Rand(-0.3, 0.3));
-				par:SetColor(120,120,120,255);
-				par:SetGravity(Vector(0, 0, 5));
-				local mup = (muz.Ang:Up()*-20);
-				par:SetVelocity(Vector(0, 0,7)+Vector(mup.x,mup.y,0));
+				local par = self.Weapon.Em:Add("sprites/frostbreath", muz.Pos)
+				par:SetStartSize(math.random(0.5, 1))
+				par:SetStartAlpha(120)
+				par:SetEndAlpha(0)
+				par:SetEndSize(math.random(5, 5.5))
+				par:SetDieTime(1.5 + math.Rand(-0.3, 0.3))
+				par:SetRoll(math.Rand(0.2, 1))
+				par:SetRollDelta(0.8 + math.Rand(-0.3, 0.3))
+				par:SetColor(120,120,120,255)
+				par:SetGravity(Vector(0, 0, 5))
+				local mup = (muz.Ang:Up()*-20)
+				par:SetVelocity(Vector(0, 0,7)+Vector(mup.x,mup.y,0))
 				
-				local par = self.Weapon.Em:Add("sprites/heatwave", muz.Pos);
-				par:SetStartSize(8);
-				par:SetEndSize(0);
-				par:SetDieTime(0.3);
-				par:SetGravity(Vector(0, 0, 2));
-				par:SetVelocity(Vector(0, 0, 20));				
+				local par = self.Weapon.Em:Add("sprites/heatwave", muz.Pos)
+				par:SetStartSize(8)
+				par:SetEndSize(0)
+				par:SetDieTime(0.3)
+				par:SetGravity(Vector(0, 0, 2))
+				par:SetVelocity(Vector(0, 0, 20))				
 			end
 		end
 	end
 
 	function SWEP:AdjustMouseSensitivity()
 		if self.Weapon:GetDTInt(0) == 1 then
-			return 0.2;
+			return 0.2
 		else
 			return 1
 		end
@@ -440,9 +440,9 @@ if CLIENT then
 	local x3 = ScrW() - x2
 	local y3 = ScrH() - y2
 	function SWEP:DrawHUD()
-		local FT = FrameTime();
+		local FT = FrameTime()
 
-		x, y = ScrW() / 2, ScrH() / 2;
+		x, y = ScrW() / 2, ScrH() / 2
 		
 		local scale = (10 * self.Cone)* (2 - math.Clamp( (CurTime() - self:GetDTFloat(1)) * 5, 0.0, 1.0 ))
 		
@@ -472,16 +472,16 @@ end
 function SWEP:SecondaryAttack()
 	if CLIENT then return end
 
-	local dt = self:GetDTInt(0);
+	local dt = self:GetDTInt(0)
 	
 	if not self.Owner.FOVRate then self.Owner.FOVRate = 90 end
 	
 	if dt == 2 then
-		return;
+		return
 	elseif dt == 1 then
-		self:SetDTInt(0,0);	
+		self:SetDTInt(0,0)	
 	else
-		self:SetDTInt(0,1);	
+		self:SetDTInt(0,1)	
 	end
 end
 

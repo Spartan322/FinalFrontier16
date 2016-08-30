@@ -19,7 +19,7 @@ function ENT:Think()
 	
 	self.SmokeTimer = CurTime() + 0.15
 
-	local vPos = Vector(math.Rand(-100, 100), math.Rand(-100, 100), 0);
+	local vPos = Vector(math.Rand(-100, 100), math.Rand(-100, 100), 0)
 
 	local vOffset = self.Entity:LocalToWorld( Vector(0, 0, self.Entity:OBBMins().z) )
 

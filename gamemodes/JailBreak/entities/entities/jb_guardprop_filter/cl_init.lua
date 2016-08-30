@@ -4,5 +4,5 @@ ENT.PrintName            = "Bouncy Ball"
 ENT.RenderGroup         = RENDERGROUP_TRANSLUCENT
 
 function ENT:Draw()
-    self:DrawModel();
+    self:DrawModel()
 end

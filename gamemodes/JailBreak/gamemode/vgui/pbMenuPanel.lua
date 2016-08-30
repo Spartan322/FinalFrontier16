@@ -9,7 +9,7 @@ local PNL = { }
 function PNL:Init()
 	self.OnDone = function() end
 	timer.Simple(1, function()
-		self.OnDone();
+		self.OnDone()
 	end)
 end
-vgui.Register( "pbMenuPanel", PNL, "Panel" );
+vgui.Register( "pbMenuPanel", PNL, "Panel" )

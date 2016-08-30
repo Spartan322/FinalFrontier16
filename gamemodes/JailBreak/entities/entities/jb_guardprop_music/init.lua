@@ -76,7 +76,7 @@ function ENT:Initialize()
     self:SetMoveType(MOVETYPE_VPHYSICS)
     self:SetSolid(SOLID_VPHYSICS)
 
-    self:SetUseType(SIMPLE_USE);
+    self:SetUseType(SIMPLE_USE)
 
     local phys = self.Entity:GetPhysicsObject()
     if (phys:IsValid()) then
@@ -88,22 +88,22 @@ function ENT:OnTakeDamage( dmginfo )
     self.Entity:TakePhysicsDamage( dmginfo )  
 end
 
-local size =(200-8*4)/4;
+local size =(200-8*4)/4
 local function WorldToScreen(vWorldPos,vPos,vScale,aRot)
-    local vWorldPos=vWorldPos-vPos;
-    vWorldPos:Rotate(Angle(0,-aRot.y,0));
-    vWorldPos:Rotate(Angle(-aRot.p,0,0));
-    vWorldPos:Rotate(Angle(0,0,-aRot.r));
-    return vWorldPos.x/vScale,(-vWorldPos.y)/vScale;
+    local vWorldPos=vWorldPos-vPos
+    vWorldPos:Rotate(Angle(0,-aRot.y,0))
+    vWorldPos:Rotate(Angle(-aRot.p,0,0))
+    vWorldPos:Rotate(Angle(0,0,-aRot.r))
+    return vWorldPos.x/vScale,(-vWorldPos.y)/vScale
 end
 function ENT:Use(e)
 	if(e:IsPlayer())then
-		local lookAtX,lookAtY = WorldToScreen(e:GetEyeTrace().HitPos or Vector(0,0,0),self:GetPos()+self:GetAngles():Up()*1.55, 0.2375, self:GetAngles());
-		local count = 0;
+		local lookAtX,lookAtY = WorldToScreen(e:GetEyeTrace().HitPos or Vector(0,0,0),self:GetPos()+self:GetAngles():Up()*1.55, 0.2375, self:GetAngles())
+		local count = 0
 
 		for y=0,3 do
 			for x=0,3 do
-				count = count+1;
+				count = count+1
 
 		        if lookAtX > -96+(x*(size+8)) and lookAtX < -96+(x*(size+8))+size and lookAtY > -96+(y*(size+8)) and lookAtY < -96+(y*(size+8))+size then
 		        	if SOUNDS[count] then

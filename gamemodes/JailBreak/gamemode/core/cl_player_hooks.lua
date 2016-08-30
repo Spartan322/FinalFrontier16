@@ -1,5 +1,5 @@
 function JB:OnSpawnMenuOpen()
-	RunConsoleCommand("jb_dropweapon");
+	RunConsoleCommand("jb_dropweapon")
 end
 
 function JB:OnContextMenuOpen() -- Show mouse on contect menu (for when we're stuck in menus or something....)
@@ -10,54 +10,54 @@ function JB:OnContextMenuClose() -- Show mouse on contect menu (for when we're s
 	JB:ToggleQCMD(false)
 end
 
-local skip_aim = 5;
-local skip_num = 0;
---these vars are for shaking the screen while running (this code is ripped from Excl's PrisonBreak2);
-local PitchMod = 0;
-local YawMod = 0;
-local RollMod = 0;
-local PAPR = 0;
-local YAPR = 0;
-local RAPR = 0;
-local PT = 0;
-local YT = 0;
-local RT = 0;
-local PT2 = 0;
-local RT2 = 0;
+local skip_aim = 5
+local skip_num = 0
+--these vars are for shaking the screen while running (this code is ripped from Excl's PrisonBreak2)
+local PitchMod = 0
+local YawMod = 0
+local RollMod = 0
+local PAPR = 0
+local YAPR = 0
+local RAPR = 0
+local PT = 0
+local YT = 0
+local RT = 0
+local PT2 = 0
+local RT2 = 0
 function JB:ResetSkipMenuMoves()
-	skip_aim = 5;
-	skip_num = 0;
+	skip_aim = 5
+	skip_num = 0
 end
 function JB:CalcView(p, pos, angles, fov) --Calculates the view, for run-view, menu-view, and death from the ragdoll's eyes.
 	local view = {}
 	if JB.MainMenuEnabled then
 		if JB.MainMenuCharacterScreen then
-			MenuPos.pos.x = Lerp(0.3,MenuPos.pos.x,MenuCharacter.pos.x);
+			MenuPos.pos.x = Lerp(0.3,MenuPos.pos.x,MenuCharacter.pos.x)
 			if MenuPos.pos.x < MenuCharacter.pos.x + 1 then
 				if skip_num >= skip_aim then
-					MenuPos.pos.z = math.Clamp(MenuPos.pos.z-1,MenuCharacter.pos.z,MenuMain.pos.z);
-					MenuPos.ang = LerpAngle(0.05,MenuPos.ang,MenuCharacter.ang);
+					MenuPos.pos.z = math.Clamp(MenuPos.pos.z-1,MenuCharacter.pos.z,MenuMain.pos.z)
+					MenuPos.ang = LerpAngle(0.05,MenuPos.ang,MenuCharacter.ang)
 				else	
-					skip_num = skip_num+1;
+					skip_num = skip_num+1
 				end
 			end
 		else
-			MenuPos.pos.z = math.Clamp(MenuPos.pos.z+1,MenuCharacter.pos.z,MenuMain.pos.z);
-			MenuPos.ang = LerpAngle(0.05,MenuPos.ang,MenuMain.ang);
+			MenuPos.pos.z = math.Clamp(MenuPos.pos.z+1,MenuCharacter.pos.z,MenuMain.pos.z)
+			MenuPos.ang = LerpAngle(0.05,MenuPos.ang,MenuMain.ang)
 			if MenuPos.pos.z > MenuMain.pos.z - 1 then
 				if skip_num >= skip_aim then
-					MenuPos.pos.x = Lerp(0.05,MenuPos.pos.x,MenuMain.pos.x);
+					MenuPos.pos.x = Lerp(0.05,MenuPos.pos.x,MenuMain.pos.x)
 				else	
-					skip_num = skip_num+1;
+					skip_num = skip_num+1
 				end
 			end
 		end
 	
-		view.origin = MenuPos.pos;
-		view.angles = MenuPos.ang;
-		view.fov = 90;
+		view.origin = MenuPos.pos
+		view.angles = MenuPos.ang
+		view.fov = 90
 	 
-		return view;
+		return view
 	end
 	
 	if p:OnGround() then --Shake view
@@ -141,7 +141,7 @@ function JB:CalcView(p, pos, angles, fov) --Calculates the view, for run-view, m
 	return view
 end
 
-local Blur = 0;
+local Blur = 0
 function JB:GetMotionBlurValues(x,y,fwd,spin)
 	if GetConVarNumber("mat_motion_blur_forward_enabled") < 1 then --This is anti cheat.
 		RunConsoleCommand("mat_motion_blur_forward_enabled", "1")
@@ -149,10 +149,10 @@ function JB:GetMotionBlurValues(x,y,fwd,spin)
 	
 	if LocalPlayer():Health()<25 then
 		Blur = math.Approach(Blur, 0.03, 0.015)
-		return x, y, Blur, spin;
+		return x, y, Blur, spin
 	elseif LocalPlayer():Health()<50 then
 		Blur = math.Approach(Blur, 0.01, 0.015)
-		return x, y, Blur, spin;
+		return x, y, Blur, spin
 	end
 	
 	if (not LocalPlayer():GetActiveWeapon()) or (not LocalPlayer():GetActiveWeapon():IsValid()) then return end
